@@ -34,7 +34,7 @@
         dayFormatter = [[NSDateFormatter alloc] init];
         dayFormatter.dateFormat = @"yyyy-MM-dd";
         timeFormatter = [[NSDateFormatter alloc] init];
-        timeFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
+        timeFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
     }
 
     NSManagedObjectContext *context = [ADManagedObjectContext sharedContext];
@@ -50,17 +50,27 @@
 
             // Find the start date of the event.
             NSDate *date;
-            if (eventData[@"start"][@"date"]) {
+           /* if (eventData[@"start"][@"date"]) {
                 date = [dayFormatter dateFromString:eventData[@"start"][@"date"]];
             } else if (eventData[@"start"][@"dateTime"]) {
                 date = [timeFormatter dateFromString:eventData[@"start"][@"dateTime"]];
-            }
+            }*/
 
+             NSString * stDate = eventData[@"startTime"];
+            
+            
+            NSString *value = [stDate substringWithRange:NSMakeRange(0,19)];
+            date = [timeFormatter dateFromString:value];
+            
             // Update event properties.
             [event setValue:eventData[@"id"] forKey:@"googleid"];
-            [event setValue:eventData[@"summary"] forKey:@"summary"];
+            [event setValue:eventData[@"title"] forKey:@"summary"];
             [event setValue:date forKey:@"date"];
-
+            
+            NSString * pid = [event valueForKey:@"googleid"];
+            NSString * ptitle = [event valueForKey:@"summary"];
+            
+            
             // Delete cancelled events.
             if ([eventData[@"status"] isEqualToString:@"cancelled"]) {
                 [context deleteObject:event];

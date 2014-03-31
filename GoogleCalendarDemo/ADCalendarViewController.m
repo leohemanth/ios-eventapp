@@ -27,7 +27,7 @@
     }
 
     // Add a navigation bar title.
-    self.navigationItem.title = @"US Federal Holidays";
+    self.navigationItem.title = @"USC EVENTS";
 
     // Set up an NSFetchedResultsController to respond to changes in Core Data storage.
     self.fetchedResultsController = [ADManagedObjectContext createEventResultsController];
@@ -44,19 +44,19 @@
 
 // Fetch calendar events. Show a pull-down spinner while updating.
 - (void)updateCalendar {
-    NSString *calendarId = @"47ou48fasc70l0758i9lh76sr8@group.calendar.google.com";
-    NSString *apiKey = @"AIzaSyDvlA6hMXJkCYl0zBJ_CRLy0g52nHC4KeA";
+  /*  NSString *calendarId = @"47ou48fasc70l0758i9lh76sr8@group.calendar.google.com";
+    NSString *apiKey = @"AIzaSyCAkVQVwMzmPHxbaLUAqvb6dYUwjKU5qnM";
     NSString *urlFormat = @"https://www.googleapis.com/calendar/v3/calendars/%@/events?key=%@&fields=items(id,start,summary,status)";
-    NSString *calendarUrl = [NSString stringWithFormat:urlFormat, calendarId, apiKey];
-        NSLog(@"url:::%@",calendarUrl);
+    NSString *calendarUrl = [NSString stringWithFormat:urlFormat, calendarId, apiKey];*/
+    
+    NSString * calendarUrl = @"https://script.google.com/macros/s/AKfycbzFeP6g6XKoyu9vRWWhKZQlSgNCGAtUA0sGNVBVq0BWPTAaMS8R/exec?id=0AraZ8rUzuRiRdGppRWZPNzBBZkR3THhmY0M4aVRpS1E&sheet=TMP";
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager GET:calendarUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"res::%@",responseObject);
-        [ADManagedObjectContext updateEvents:responseObject[@"items"]];
+        [ADManagedObjectContext updateEvents:responseObject[@"TMP"]];
         [self.refreshControl endRefreshing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error:::%@",error);
         [self.refreshControl endRefreshing];
     }];
 }
