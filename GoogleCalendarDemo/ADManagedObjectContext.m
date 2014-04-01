@@ -7,6 +7,7 @@
 //
 
 #import "ADManagedObjectContext.h"
+#import "ADCalendarViewController.h"
 
 @implementation ADManagedObjectContext
 
@@ -49,27 +50,28 @@
             event = (results.count > 0) ? results[0] : [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
 
             // Find the start date of the event.
-            NSDate *date;
+            NSDate *startDate,*endDate;
            /* if (eventData[@"start"][@"date"]) {
                 date = [dayFormatter dateFromString:eventData[@"start"][@"date"]];
             } else if (eventData[@"start"][@"dateTime"]) {
                 date = [timeFormatter dateFromString:eventData[@"start"][@"dateTime"]];
             }*/
 
-             NSString * stDate = eventData[@"startTime"];
+            NSString * stDateString = eventData[@"startTime"];
+            NSString *stDatevalue = [stDateString substringWithRange:NSMakeRange(0,19)];
+            startDate = [timeFormatter dateFromString:stDatevalue];
             
-            
-            NSString *value = [stDate substringWithRange:NSMakeRange(0,19)];
-            date = [timeFormatter dateFromString:value];
+            NSString * endDateString = eventData[@"endTime"];
+            NSString *endDatevalue = [endDateString substringWithRange:NSMakeRange(0,19)];
+            endDate = [timeFormatter dateFromString:endDatevalue];
             
             // Update event properties.
             [event setValue:eventData[@"id"] forKey:@"googleid"];
             [event setValue:eventData[@"title"] forKey:@"summary"];
-            [event setValue:date forKey:@"date"];
-            
-            NSString * pid = [event valueForKey:@"googleid"];
-            NSString * ptitle = [event valueForKey:@"summary"];
-            
+            [event setValue:startDate forKey:@"date"];
+            [event setValue:eventData[@"location"] forKey:@"location"];
+            [event setValue:eventData[@"description"] forKey:@"desc"];
+            [event setValue:endDate forKey:@"endDate"];
             
             // Delete cancelled events.
             if ([eventData[@"status"] isEqualToString:@"cancelled"]) {

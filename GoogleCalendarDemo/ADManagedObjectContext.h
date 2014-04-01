@@ -13,5 +13,4 @@
 + (NSManagedObjectContext *)sharedContext;
 + (void)updateEvents:(NSArray *)events;
 + (NSFetchedResultsController *)createEventResultsController;
-
 @end
