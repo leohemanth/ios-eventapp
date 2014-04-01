@@ -29,7 +29,9 @@
 }
 
 // Parse a dictionary of events and add new events to the Core Data store.
-+ (void)updateEvents:(NSArray *)events {
++ (NSMutableArray*)updateEvents:(NSArray *)events {
+    NSMutableArray *eventArray =[[NSMutableArray alloc]init];
+    
     static NSDateFormatter *dayFormatter, *timeFormatter;
     if (!dayFormatter || !timeFormatter) {
         dayFormatter = [[NSDateFormatter alloc] init];
@@ -77,6 +79,8 @@
             if ([eventData[@"status"] isEqualToString:@"cancelled"]) {
                 [context deleteObject:event];
             }
+            
+            [eventArray addObject:event];
         }
 
         // Delete old events.
@@ -89,6 +93,8 @@
 
         [context save:nil];
     }];
+    
+    return eventArray;
 }
 
 // Create a fetched results controller to get events that will occur in the next year.

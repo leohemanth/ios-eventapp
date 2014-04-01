@@ -9,4 +9,5 @@
 @import UIKit;
 
 @interface ADCalendarViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@property (strong,nonatomic) NSMutableArray * eventsArray ;
 @end

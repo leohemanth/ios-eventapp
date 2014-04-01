@@ -28,7 +28,8 @@
 
     // Add a navigation bar title.
     self.navigationItem.title = @"USC EVENTS";
-
+    self.eventsArray  = [[NSMutableArray alloc] init];
+    
     // Set up an NSFetchedResultsController to respond to changes in Core Data storage.
     self.fetchedResultsController = [ADManagedObjectContext createEventResultsController];
     self.fetchedResultsController.delegate = self;
@@ -54,7 +55,7 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager GET:calendarUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [ADManagedObjectContext updateEvents:responseObject[@"TMP"]];
+         self.eventsArray = [ADManagedObjectContext updateEvents:responseObject[@"TMP"]];
         [self.refreshControl endRefreshing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self.refreshControl endRefreshing];
@@ -110,6 +111,8 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     //[self.detailViewController updateViewWithObject:self.articles[indexPath.row]];
+    NSManagedObject * obj = (NSManagedObject *)self.eventsArray[indexPath.row];
+    
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
