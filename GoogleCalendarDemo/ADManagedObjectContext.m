@@ -39,7 +39,7 @@
         timeFormatter = [[NSDateFormatter alloc] init];
         timeFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
     }
-
+    
     NSManagedObjectContext *context = [ADManagedObjectContext sharedContext];
     [context performBlockAndWait:^{
         // Add all new events.
@@ -50,15 +50,15 @@
             fetchRequest.predicate = [NSPredicate predicateWithFormat:@"googleid == %@", eventData[@"id"]];
             NSArray *results = [context executeFetchRequest:fetchRequest error:nil];
             event = (results.count > 0) ? results[0] : [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
-
+            
             // Find the start date of the event.
             NSDate *startDate,*endDate;
-           /* if (eventData[@"start"][@"date"]) {
-                date = [dayFormatter dateFromString:eventData[@"start"][@"date"]];
-            } else if (eventData[@"start"][@"dateTime"]) {
-                date = [timeFormatter dateFromString:eventData[@"start"][@"dateTime"]];
-            }*/
-
+            /* if (eventData[@"start"][@"date"]) {
+             date = [dayFormatter dateFromString:eventData[@"start"][@"date"]];
+             } else if (eventData[@"start"][@"dateTime"]) {
+             date = [timeFormatter dateFromString:eventData[@"start"][@"dateTime"]];
+             }*/
+            
             NSString * stDateString = eventData[@"startTime"];
             NSString *stDatevalue = [stDateString substringWithRange:NSMakeRange(0,19)];
             startDate = [timeFormatter dateFromString:stDatevalue];
@@ -69,11 +69,23 @@
             
             // Update event properties.
             [event setValue:eventData[@"id"] forKey:@"googleid"];
+            NSLog(@"%@,%@",@"googleid",eventData[@"id"]);
+            
             [event setValue:eventData[@"title"] forKey:@"summary"];
+            NSLog(@"%@,%@",@"summary",eventData[@"title"]);
+            
             [event setValue:startDate forKey:@"date"];
+            NSLog(@"%@,%@",@"date",startDate);
+            
             [event setValue:eventData[@"location"] forKey:@"location"];
+            NSLog(@"%@,%@",@"location",eventData[@"location"]);
+            
             [event setValue:eventData[@"description"] forKey:@"desc"];
+            NSLog(@"%@,%@",@"desc",eventData[@"desc"]);
+            
             [event setValue:endDate forKey:@"endDate"];
+            NSLog(@"%@,%@",@"enddate",eventData[@"endDate"]);
+            
             
             // Delete cancelled events.
             if ([eventData[@"status"] isEqualToString:@"cancelled"]) {
@@ -82,7 +94,7 @@
             
             [eventArray addObject:event];
         }
-
+        
         // Delete old events.
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Event"];
         fetchRequest.predicate = [NSPredicate predicateWithFormat:@"date < %@", [self today]];
@@ -90,7 +102,7 @@
         for (NSManagedObject *oldEvent in oldEvents) {
             [context deleteObject:oldEvent];
         }
-
+        
         [context save:nil];
     }];
     
@@ -104,11 +116,11 @@
         dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.dateFormat = @"yyyy-MM-dd";
     }
-
+    
     // Get the date of today and one year from today.
     NSDate *today = [self today];
     NSDate *nextYear = [self yearFromDate:today];
-
+    
     // The fetched results controller should show events in the next year sorted by date.
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Event"];
     request.predicate = [NSPredicate predicateWithFormat:@"(date >= %@) AND (date < %@)", today, nextYear];

@@ -13,11 +13,13 @@
 @property (strong, nonatomic) UILabel *monthLabel;
 @property (strong, nonatomic) UILabel *dayLabel;
 @property (strong, nonatomic) UISwitch *removeObject;
+@property (strong,nonatomic) IBOutlet UISwitch * addSwitch;
+@property (strong, nonatomic) IBOutlet UILabel *subtitleView;
 @end
 
 @implementation ADCalendarEventCell
 
-- (void)setSummary:(NSString *)summary andDate:(NSDate *)date {
+- (void)setSummary:(NSString *)summary date:(NSDate *)date andLocation:(NSString*)location{
     static NSDateFormatter *dateFormatter;
     if (!dateFormatter) {
         dateFormatter = [[NSDateFormatter alloc] init];
@@ -58,12 +60,17 @@
     [self.contentView addSubview:self.dayLabel];
 
     CGFloat summaryLabelX = self.dayLabel.frame.origin.x + self.dayLabel.frame.size.width + kSummaryLeftMargin;
-    CGRect summaryLabelFrame = CGRectMake(summaryLabelX, 0, self.frame.size.width - summaryLabelX, self.frame.size.height);
+    CGRect summaryLabelFrame = CGRectMake(summaryLabelX, 0, self.frame.size.width - summaryLabelX, self.frame.size.height-20);
+    CGRect locationLabelFrame = CGRectMake(summaryLabelX, self.frame.size.height-20, self.frame.size.width - summaryLabelX, self.frame.size.height-20);
+
     self.summaryLabel = [[UILabel alloc] initWithFrame:summaryLabelFrame];
+    self.subtitleView = [[UILabel alloc] initWithFrame:locationLabelFrame];
     self.summaryLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+    self.subtitleView.font = [UIFont systemFontOfSize:[UIFont systemFontSize]-5];
     self.summaryLabel.text = summary;
+    self.subtitleView.text =location;
     [self.contentView addSubview:self.summaryLabel];
-    
+            [self.contentView addSubview:self.subtitleView];
     
    /* CGFloat summaryLabelX = self.dayLabel.frame.origin.x + self.dayLabel.frame.size.width + kSummaryLeftMargin;
     CGRect summaryLabelFrame = CGRectMake(summaryLabelX, 0, self.frame.size.width - summaryLabelX, self.frame.size.height);

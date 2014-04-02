@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		183AF76618ECBF9800E62EE5 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 183AF76518ECBF9800E62EE5 /* Storyboard.storyboard */; };
+		183AF76918ECC38C00E62EE5 /* DetailViewTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183AF76818ECC38C00E62EE5 /* DetailViewTableViewController.m */; };
+		183AF76C18ECC80500E62EE5 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 183AF76B18ECC80500E62EE5 /* Event.m */; };
 		4906A8781884AC7E000FFEE8 /* ADCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4906A8771884AC7E000FFEE8 /* ADCalendarViewController.m */; };
 		4945E5251886043E0004CF3C /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4945E5231886043E0004CF3C /* Model.xcdatamodeld */; };
 		4945E5271886054A0004CF3C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4945E5261886054A0004CF3C /* CoreData.framework */; };
@@ -38,6 +41,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		183AF76518ECBF9800E62EE5 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		183AF76718ECC38C00E62EE5 /* DetailViewTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewTableViewController.h; sourceTree = "<group>"; };
+		183AF76818ECC38C00E62EE5 /* DetailViewTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewTableViewController.m; sourceTree = "<group>"; };
+		183AF76A18ECC80500E62EE5 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		183AF76B18ECC80500E62EE5 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		4906A8761884AC7E000FFEE8 /* ADCalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADCalendarViewController.h; sourceTree = "<group>"; };
 		4906A8771884AC7E000FFEE8 /* ADCalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADCalendarViewController.m; sourceTree = "<group>"; };
 		4945E5241886043E0004CF3C /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -132,11 +140,16 @@
 				4950F71D18839B610030AD3E /* ADAppDelegate.m */,
 				4906A8761884AC7E000FFEE8 /* ADCalendarViewController.h */,
 				4906A8771884AC7E000FFEE8 /* ADCalendarViewController.m */,
+				183AF76518ECBF9800E62EE5 /* Storyboard.storyboard */,
+				183AF76718ECC38C00E62EE5 /* DetailViewTableViewController.h */,
+				183AF76818ECC38C00E62EE5 /* DetailViewTableViewController.m */,
 				49BBC27118908E6900D209DB /* ADCalendarEventCell.h */,
 				49BBC27218908E6900D209DB /* ADCalendarEventCell.m */,
 				4945E5281886095C0004CF3C /* ADManagedObjectContext.h */,
 				4945E5291886095C0004CF3C /* ADManagedObjectContext.m */,
 				4945E5231886043E0004CF3C /* Model.xcdatamodeld */,
+				183AF76A18ECC80500E62EE5 /* Event.h */,
+				183AF76B18ECC80500E62EE5 /* Event.m */,
 				4950F71F18839B610030AD3E /* Images.xcassets */,
 				4950F71418839B610030AD3E /* Supporting Files */,
 			);
@@ -252,6 +265,7 @@
 			files = (
 				4950F71818839B610030AD3E /* InfoPlist.strings in Resources */,
 				4950F72018839B610030AD3E /* Images.xcassets in Resources */,
+				183AF76618ECBF9800E62EE5 /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,8 +318,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4945E52A1886095C0004CF3C /* ADManagedObjectContext.m in Sources */,
+				183AF76918ECC38C00E62EE5 /* DetailViewTableViewController.m in Sources */,
 				4950F71A18839B610030AD3E /* main.m in Sources */,
 				4945E5251886043E0004CF3C /* Model.xcdatamodeld in Sources */,
+				183AF76C18ECC80500E62EE5 /* Event.m in Sources */,
 				4950F71E18839B610030AD3E /* ADAppDelegate.m in Sources */,
 				4906A8781884AC7E000FFEE8 /* ADCalendarViewController.m in Sources */,
 				49BBC27318908E6900D209DB /* ADCalendarEventCell.m in Sources */,

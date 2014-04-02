@@ -10,7 +10,8 @@
 #import "AFNetworking.h"
 #import "ADManagedObjectContext.h"
 #import "ADCalendarEventCell.h"
-
+#import "Event.h"
+#import "DetailViewTableViewController.h"
 @interface ADCalendarViewController ()
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
@@ -20,12 +21,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     // In iOS 7+, don't extend the table view underneath the navigation bar.
     if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-
+    
     // Add a navigation bar title.
     self.navigationItem.title = @"USC EVENTS";
     self.eventsArray  = [[NSMutableArray alloc] init];
@@ -34,28 +34,23 @@
     self.fetchedResultsController = [ADManagedObjectContext createEventResultsController];
     self.fetchedResultsController.delegate = self;
     [self.fetchedResultsController performFetch:nil];
-
+    
     // Set up the refresh control and start a refresh action.
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(updateCalendar) forControlEvents:UIControlEventValueChanged];
     [self.tableView setContentOffset:CGPointMake(0, -self.refreshControl.frame.size.height) animated:NO];
-    [self.refreshControl beginRefreshing];
-    [self updateCalendar];
+//    [self updateCalendar];
 }
 
 // Fetch calendar events. Show a pull-down spinner while updating.
 - (void)updateCalendar {
-  /*  NSString *calendarId = @"47ou48fasc70l0758i9lh76sr8@group.calendar.google.com";
-    NSString *apiKey = @"AIzaSyCAkVQVwMzmPHxbaLUAqvb6dYUwjKU5qnM";
-    NSString *urlFormat = @"https://www.googleapis.com/calendar/v3/calendars/%@/events?key=%@&fields=items(id,start,summary,status)";
-    NSString *calendarUrl = [NSString stringWithFormat:urlFormat, calendarId, apiKey];*/
-    
+    [self.refreshControl beginRefreshing];
     NSString * calendarUrl = @"https://script.google.com/macros/s/AKfycbzFeP6g6XKoyu9vRWWhKZQlSgNCGAtUA0sGNVBVq0BWPTAaMS8R/exec?id=0AraZ8rUzuRiRdGppRWZPNzBBZkR3THhmY0M4aVRpS1E&sheet=TMP";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager GET:calendarUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-         self.eventsArray = [ADManagedObjectContext updateEvents:responseObject[@"TMP"]];
+        self.eventsArray = [ADManagedObjectContext updateEvents:responseObject[@"TMP"]];
         [self.refreshControl endRefreshing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self.refreshControl endRefreshing];
@@ -64,7 +59,7 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *event = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [(ADCalendarEventCell *)cell setSummary:[event valueForKey:@"summary"] andDate:[event valueForKey:@"date"]];
+    [(ADCalendarEventCell *)cell setSummary:[event valueForKey:@"summary"] date:[event valueForKey:@"date"] andLocation:[event valueForKey:@"location"]];
 }
 
 #pragma mark - UITableViewDataSource
@@ -80,9 +75,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"ADCalendarViewControllerCellIdentifier";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell) {
-        cell = [[ADCalendarEventCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    }
+//    if (!cell) {
+//        cell = [[ADCalendarEventCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+//    }
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
@@ -102,33 +97,34 @@
         case NSFetchedResultsChangeInsert:
             [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
-
+            
         case NSFetchedResultsChangeDelete:
             [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
     }
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    //[self.detailViewController updateViewWithObject:self.articles[indexPath.row]];
-    NSManagedObject * obj = (NSManagedObject *)self.eventsArray[indexPath.row];
-    
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+       Event *event = [self.fetchedResultsController objectAtIndexPath:self.tableView.indexPathForSelectedRow];
+    if ([segue.identifier isEqualToString:@"eventDetail"]) {
+        DetailViewTableViewController* detail= segue.destinationViewController;
+        detail.event=event;
+    }
 }
-
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     switch (type) {
         case NSFetchedResultsChangeInsert:
             [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
-
+            
         case NSFetchedResultsChangeDelete:
             [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
-
+            
         case NSFetchedResultsChangeUpdate:
             [self configureCell:[self.tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
-
+            
         case NSFetchedResultsChangeMove:
             [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
