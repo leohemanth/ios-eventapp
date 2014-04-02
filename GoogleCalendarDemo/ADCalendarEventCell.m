@@ -12,6 +12,7 @@
 @property (strong, nonatomic) UILabel *summaryLabel;
 @property (strong, nonatomic) UILabel *monthLabel;
 @property (strong, nonatomic) UILabel *dayLabel;
+@property (strong, nonatomic) UISwitch *removeObject;
 @end
 
 @implementation ADCalendarEventCell
@@ -62,6 +63,15 @@
     self.summaryLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
     self.summaryLabel.text = summary;
     [self.contentView addSubview:self.summaryLabel];
+    
+    
+   /* CGFloat summaryLabelX = self.dayLabel.frame.origin.x + self.dayLabel.frame.size.width + kSummaryLeftMargin;
+    CGRect summaryLabelFrame = CGRectMake(summaryLabelX, 0, self.frame.size.width - summaryLabelX, self.frame.size.height);
+    
+    self.removeObject = [[UISwitch alloc]init];
+    [self.contentView addSubview:self.removeObject];*/
+
+    
 }
 
 @end
