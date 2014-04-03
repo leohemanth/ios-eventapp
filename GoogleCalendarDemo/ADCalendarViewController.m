@@ -39,7 +39,7 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(updateCalendar) forControlEvents:UIControlEventValueChanged];
     [self.tableView setContentOffset:CGPointMake(0, -self.refreshControl.frame.size.height) animated:NO];
-//    [self updateCalendar];
+    [self updateCalendar];
 }
 
 // Fetch calendar events. Show a pull-down spinner while updating.

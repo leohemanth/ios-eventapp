@@ -31,12 +31,12 @@
     NSInteger kDayTopMargin = -4;
     NSInteger kSummaryLeftMargin = 12;
 
-    [[self.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+   // [[self.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 
     CGFloat monthLabelHeight = self.frame.size.height * .3;
     CGFloat dayLabelHeight = self.frame.size.height * .7;
 
-    self.monthLabel = [[UILabel alloc] init];
+    if(self.monthLabel==nil) self.monthLabel = [[UILabel alloc] init];
     self.monthLabel.text = [[dateFormatter stringFromDate:date] uppercaseString];
     self.monthLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
     CGFloat monthFontSize = self.monthLabel.font.pointSize / [self.monthLabel.text sizeWithFont:self.monthLabel.font].height * monthLabelHeight;
@@ -47,7 +47,7 @@
     [self.contentView addSubview:self.monthLabel];
 
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    self.dayLabel = [[UILabel alloc] init];
+    if(self.dayLabel==nil) self.dayLabel = [[UILabel alloc] init];
     self.dayLabel.text = [NSString stringWithFormat:@"%02d", [calendar components:NSDayCalendarUnit fromDate:date].day];
     self.dayLabel.font = [UIFont boldSystemFontOfSize:[UIFont systemFontSize]];
     CGFloat dayFontSize = self.dayLabel.font.pointSize / [self.dayLabel.text sizeWithFont:self.dayLabel.font].height * dayLabelHeight;
@@ -63,15 +63,16 @@
     CGRect summaryLabelFrame = CGRectMake(summaryLabelX, 0, self.frame.size.width - summaryLabelX, self.frame.size.height-20);
     CGRect locationLabelFrame = CGRectMake(summaryLabelX, self.frame.size.height-20, self.frame.size.width - summaryLabelX, self.frame.size.height-20);
 
-    self.summaryLabel = [[UILabel alloc] initWithFrame:summaryLabelFrame];
-    self.subtitleView = [[UILabel alloc] initWithFrame:locationLabelFrame];
+    if(self.summaryLabel==nil) self.summaryLabel = [[UILabel alloc] initWithFrame:summaryLabelFrame];
+    if(self.subtitleView==nil) self.subtitleView = [[UILabel alloc] initWithFrame:locationLabelFrame];
     self.summaryLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
     self.subtitleView.font = [UIFont systemFontOfSize:[UIFont systemFontSize]-5];
     self.summaryLabel.text = summary;
     self.subtitleView.text =location;
     [self.contentView addSubview:self.summaryLabel];
             [self.contentView addSubview:self.subtitleView];
-    
+    [self.contentView bringSubviewToFront:self.addSwitch];
+    NSLog(@"%@",[self.contentView subviews]);
    /* CGFloat summaryLabelX = self.dayLabel.frame.origin.x + self.dayLabel.frame.size.width + kSummaryLeftMargin;
     CGRect summaryLabelFrame = CGRectMake(summaryLabelX, 0, self.frame.size.width - summaryLabelX, self.frame.size.height);
     
