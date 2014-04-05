@@ -28,7 +28,7 @@
 {
     [super viewDidLoad];
     
-    FBLoginView *loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"basci_info",@"email"]];
+    FBLoginView *loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"basic_info",@"email"]];
     // Align the button in the center horizontally
     loginView.delegate = self;
     
