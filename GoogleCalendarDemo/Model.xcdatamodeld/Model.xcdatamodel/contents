@@ -4,7 +4,11 @@
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="endDate" optional="YES" attributeType="Date" syncable="YES"/>
+<<<<<<< HEAD
         <attribute name="fblink" optional="YES" attributeType="String" syncable="YES"/>
+=======
+        <attribute name="fbid" optional="YES" attributeType="String" syncable="YES"/>
+>>>>>>> c39cb7c1e3d6fe4093fa84c42be3f04932a7ad04
         <attribute name="googleid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="summary" optional="YES" attributeType="String" syncable="YES"/>

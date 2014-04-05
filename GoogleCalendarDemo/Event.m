@@ -17,6 +17,10 @@
 @dynamic googleid;
 @dynamic location;
 @dynamic summary;
+<<<<<<< HEAD
 @dynamic fblink;
 
+=======
+@dynamic fbid;
+>>>>>>> c39cb7c1e3d6fe4093fa84c42be3f04932a7ad04
 @end

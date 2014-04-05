@@ -23,18 +23,20 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb485044158261696</string>
+				<string>fb1412195779039829</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>FacebookAppID</key>
-	<string>485044158261696</string>
+	<string>1412195779039829</string>
 	<key>FacebookDisplayName</key>
-	<string>USC Events</string>
+	<string>USCEvents</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIMainStoryboardFile</key>
