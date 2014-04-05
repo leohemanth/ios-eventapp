@@ -8,19 +8,22 @@
 
 #import <UIKit/UIKit.h>
 #import "Event.h"
+#import <EventKit/EventKit.h>
+#import <EventKitUI/EventKitUI.h>
 
-@interface DetailViewController : UIViewController<UIScrollViewDelegate>
+@interface DetailViewController : UIViewController<UIScrollViewDelegate,EKEventEditViewDelegate>
 
-@property (strong, nonatomic) IBOutlet UILabel *lblStartDate;
-@property (strong, nonatomic) IBOutlet UILabel *lblEndDate;
-@property (strong, nonatomic) IBOutlet UIImageView *calView;
-@property (strong, nonatomic) IBOutlet UIImageView *bannerView;
-@property (strong, nonatomic) IBOutlet UILabel *lblTitle;
-@property (strong, nonatomic) IBOutlet UILabel *lblLocation;
-@property (strong, nonatomic) IBOutlet UILabel *lblEventURL;
-@property (strong, nonatomic) IBOutlet UIButton *btnCalendarAdd;
+@property (weak, nonatomic) IBOutlet UILabel *lblStartDate;
+@property (weak, nonatomic) IBOutlet UILabel *lblEndDate;
+@property (weak, nonatomic) IBOutlet UIImageView *calView;
+@property (weak, nonatomic) IBOutlet UIImageView *bannerView;
+@property (weak, nonatomic) IBOutlet UILabel *lblTitle;
+@property (weak, nonatomic) IBOutlet UILabel *lblLocation;
+@property (weak, nonatomic) IBOutlet UILabel *lblEventURL;
+@property (weak, nonatomic) IBOutlet UILabel *lblDesc;
+@property (weak, nonatomic) IBOutlet UIImageView *calImage;
+@property (weak,nonatomic) IBOutlet UIScrollView * scrollView;
 @property (strong,nonatomic) Event * currentEvent;
 -(void)fillDetails : (Event *) eventObj;
-@property UIScrollView *myScrollView;
 
 @end

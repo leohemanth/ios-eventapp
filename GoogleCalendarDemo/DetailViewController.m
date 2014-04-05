@@ -9,7 +9,7 @@
 #import "DetailViewController.h"
 
 @interface DetailViewController ()
-
+@property (nonatomic, strong) EKEventStore *eventStore;
 @end
 
 @implementation DetailViewController
@@ -17,6 +17,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.eventStore = [[EKEventStore alloc] init];
     NSLog(@"in view did load!!");
     NSLog(@"fillDetail: %@",self.currentEvent);
     NSDateFormatter *dayFormatter, *timeFormatter;
@@ -33,32 +34,48 @@
     self.lblLocation.text = self.currentEvent.location;
     self.lblTitle.text = self.currentEvent.summary;
     self.lblEventURL.text = self.currentEvent.fblink;
+    self.lblDesc.text=self.currentEvent.desc;
     NSURL *url = [NSURL URLWithString:self.currentEvent.pic];
     NSData *data = [NSData dataWithContentsOfURL:url];
     UIImage *img = [[UIImage alloc] initWithData:data];
     //CGSize size = img.size;
     [self.bannerView setImage:img];
+    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStyleDone target:self action:@selector(addToCall)];
+    
 	// Do any additional setup after loading the view.
 }
+-(void)addToCall{
+    EKEventEditViewController *addController = [[EKEventEditViewController alloc] init];
+    EKEvent *event;
+    addController.editViewDelegate = self;
+    addController.eventStore = self.eventStore;
+    event = [EKEvent eventWithEventStore:self.eventStore];
+    event.title = self.currentEvent.summary;
+    event.location = self.currentEvent.location;
+    event.startDate = self.currentEvent.date;
+    event.endDate =  self.currentEvent.endDate;
+    event.notes = self.currentEvent.desc;
+    event.URL= [NSURL URLWithString:self.currentEvent.fblink];
+    addController.event=event;
+    [self presentViewController:addController animated:YES completion:nil];
+}
 
--(void)addScrollView{
-    UIScrollView * myScrollView = [[UIScrollView alloc]initWithFrame:
-                    CGRectMake(20, 20, 280, 420)];
-    myScrollView.accessibilityActivationPoint = CGPointMake(100, 100);
-    
-    [myScrollView addSubview:self.bannerView];
-    [myScrollView addSubview:self.lblEndDate];
-    [myScrollView addSubview:self.lblStartDate];
-    [myScrollView addSubview:self.lblEventURL];
-    [myScrollView addSubview:self.lblLocation];
-    [myScrollView addSubview:self.calView];
-    [myScrollView addSubview:self.lblTitle];
-    myScrollView.minimumZoomScale = 0.5;
-    myScrollView.maximumZoomScale = 3;
-   // myScrollView.contentSize = CGSizeMake(imgView.frame.size.width,
-                                          //imgView.frame.size.height);
-    myScrollView.delegate = self;
-    [self.view addSubview:myScrollView];
+-(void)viewDidAppear:(BOOL)animated{
+    NSLog(@"b:%f",self.scrollView.contentSize.height);
+    CGRect contentRect = CGRectZero;
+    for (UIView *view in self.scrollView.subviews) {
+        contentRect = CGRectUnion(contentRect, view.frame);
+    }
+    self.scrollView.contentSize = contentRect.size;
+    NSLog(@"a:%f",self.scrollView.contentSize.height);
+    [super viewDidAppear:animated];
+}
+
+
+- (void)eventEditViewController:(EKEventEditViewController *)controller
+		  didCompleteWithAction:(EKEventEditViewAction)action
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,7 +87,7 @@
 -(void)fillDetails : (Event *) eventObj
 {
     self.currentEvent=eventObj;
-  
+    
 }
 
 @end
