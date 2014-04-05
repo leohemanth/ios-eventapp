@@ -33,7 +33,32 @@
     self.lblLocation.text = self.currentEvent.location;
     self.lblTitle.text = self.currentEvent.summary;
     self.lblEventURL.text = self.currentEvent.fblink;
+    NSURL *url = [NSURL URLWithString:self.currentEvent.pic];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    UIImage *img = [[UIImage alloc] initWithData:data];
+    //CGSize size = img.size;
+    [self.bannerView setImage:img];
 	// Do any additional setup after loading the view.
+}
+
+-(void)addScrollView{
+    UIScrollView * myScrollView = [[UIScrollView alloc]initWithFrame:
+                    CGRectMake(20, 20, 280, 420)];
+    myScrollView.accessibilityActivationPoint = CGPointMake(100, 100);
+    
+    [myScrollView addSubview:self.bannerView];
+    [myScrollView addSubview:self.lblEndDate];
+    [myScrollView addSubview:self.lblStartDate];
+    [myScrollView addSubview:self.lblEventURL];
+    [myScrollView addSubview:self.lblLocation];
+    [myScrollView addSubview:self.calView];
+    [myScrollView addSubview:self.lblTitle];
+    myScrollView.minimumZoomScale = 0.5;
+    myScrollView.maximumZoomScale = 3;
+   // myScrollView.contentSize = CGSizeMake(imgView.frame.size.width,
+                                          //imgView.frame.size.height);
+    myScrollView.delegate = self;
+    [self.view addSubview:myScrollView];
 }
 
 - (void)didReceiveMemoryWarning

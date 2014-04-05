@@ -202,7 +202,7 @@
     // Query to fetch the active user's friends, limit to 25.
     
     NSString *query =
-    @"SELECT name, venue, location, start_time, eid FROM event"
+    @"SELECT name, venue, location, start_time, eid, pic_cover FROM event"
     @" WHERE eid IN (SELECT eid FROM event_member WHERE uid IN ("
     @" SELECT uid2 FROM friend WHERE uid1 = me() and uid2 in ("
     @" SELECT uid FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) or uid=me()"
@@ -256,6 +256,8 @@
         fbEvent.summary=NULL_TO_NIL(eventData[@"name"]);
         fbEvent.desc=NULL_TO_NIL(eventData[@"name"]);
         fbEvent.fbid=NULL_TO_NIL(eventData[@"eid"]);
+        fbEvent.pic=NULL_TO_NIL(eventData[@"pic_cover"][@"source"]);
+        
         fbEvent.fblink= [NSString stringWithFormat:@"https://www.facebook.com/events/%@",fbEvent.fbid ];
         NSString * stDateString = NULL_TO_NIL(eventData[@"start_time"]);
         if (stDateString.length>12)

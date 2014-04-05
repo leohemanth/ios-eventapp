@@ -20,5 +20,6 @@
 @dynamic location;
 @dynamic summary;
 @dynamic calIdentifier;
+@dynamic pic;
 
 @end
