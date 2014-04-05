@@ -213,17 +213,12 @@
 				4945E5281886095C0004CF3C /* ADManagedObjectContext.h */,
 				4945E5291886095C0004CF3C /* ADManagedObjectContext.m */,
 				4945E5231886043E0004CF3C /* Model.xcdatamodeld */,
-<<<<<<< HEAD
 				1814942918EFF72500836073 /* Event.h */,
 				1814942A18EFF72500836073 /* Event.m */,
 				1814942318EFED8B00836073 /* EntityFilter.h */,
 				1814942418EFED8B00836073 /* EntityFilter.m */,
-=======
 				53AB465B18EFE10A0087D51A /* FbEvents.h */,
 				53AB465C18EFE10A0087D51A /* FbEvents.m */,
-				183AF76A18ECC80500E62EE5 /* Event.h */,
-				183AF76B18ECC80500E62EE5 /* Event.m */,
->>>>>>> c39cb7c1e3d6fe4093fa84c42be3f04932a7ad04
 				4950F71F18839B610030AD3E /* Images.xcassets */,
 				4950F71418839B610030AD3E /* Supporting Files */,
 			);
