@@ -42,7 +42,7 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(updateCalendar) forControlEvents:UIControlEventValueChanged];
     [self.tableView setContentOffset:CGPointMake(0, -self.refreshControl.frame.size.height) animated:NO];
-   [self updateCalendar];
+    [self updateCalendar];
     [self fqlRequest];
 }
 
@@ -138,9 +138,14 @@
 //}
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     Event *event = [self.fetchedResultsController objectAtIndexPath:self.tableView.indexPathForSelectedRow];
-    DetailViewTableViewController* detail= [[DetailViewTableViewController alloc ] init];
-    detail.event=event;
-    [self.navigationController pushViewController:detail animated:YES];
+    if (event.fblink)
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:event.fblink]];
+    else{
+        DetailViewTableViewController* detail= [[DetailViewTableViewController alloc ] init];
+        detail.event=event;
+        [self.navigationController pushViewController:detail animated:YES];
+        [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
+    }
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
 }
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
