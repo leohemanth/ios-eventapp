@@ -8,7 +8,7 @@
 
 #import "ADManagedObjectContext.h"
 #import "ADCalendarViewController.h"
-
+#import "Event.h"
 @implementation ADManagedObjectContext
 
 // Get or create a managed object context.
@@ -45,7 +45,7 @@
         // Add all new events.
         for (NSDictionary *eventData in events) {
             // Find an event if it is already stored or create it otherwise.
-            NSManagedObject *event;
+            Event *event;
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Event"];
             fetchRequest.predicate = [NSPredicate predicateWithFormat:@"googleid == %@", eventData[@"id"]];
             NSArray *results = [context executeFetchRequest:fetchRequest error:nil];
@@ -70,7 +70,18 @@
             // Update event properties.
             [event setValue:eventData[@"id"] forKey:@"googleid"];
             
-            NSLog(@"%@",eventData[@"id"]);
+            if ([eventData[@"id"] rangeOfString:@"@facebook.com"].location != NSNotFound) {
+                NSError *error;
+                NSString *pattern = @"e(.*)@facebook.com";
+                NSString *string = eventData[@"id"];
+                NSRange range = NSMakeRange(0, string.length);
+                NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:&error];
+                NSArray *matches = [regex matchesInString:string options:NSMatchingReportProgress range:range];
+//                NSLog(@"match:%@",[matches[0] rangeAtIndex:1]);
+                event.fblink = [NSString stringWithFormat:@"https://www.facebook.com/events/%@",[eventData[@"id"] substringWithRange:[matches[0] rangeAtIndex:1]]];
+                NSLog(@"%@",event.fblink);
+                event.fbid =[eventData[@"id"] substringWithRange:[matches[0] rangeAtIndex:1]];
+            }
             [event setValue:eventData[@"title"] forKey:@"summary"];
             
 
@@ -117,6 +128,8 @@
     
     // The fetched results controller should show events in the next year sorted by date.
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Event"];
+    request.returnsDistinctResults=YES;
+    [request setPropertiesToFetch:@[@"fblink"]];
     request.predicate = [NSPredicate predicateWithFormat:@"(date >= %@) AND (date < %@)", today, nextYear];
     request.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES]];
     NSManagedObjectContext *context = [ADManagedObjectContext sharedContext];

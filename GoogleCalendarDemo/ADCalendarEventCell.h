@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ADCalendarEventCell : UITableViewCell
-- (void)setSummary:(NSString *)summary date:(NSDate *)date andLocation:(NSString*)location;
+- (void)setSummary:(NSString *)summary date:(NSDate *)date location:(NSString*)location andFblink:(NSString*)fblink;
 @end

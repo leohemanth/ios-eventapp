@@ -19,7 +19,7 @@
 
 @implementation ADCalendarEventCell
 
-- (void)setSummary:(NSString *)summary date:(NSDate *)date andLocation:(NSString*)location{
+- (void)setSummary:(NSString *)summary date:(NSDate *)date location:(NSString*)location andFblink:(NSString*)fblink{
     static NSDateFormatter *dateFormatter;
     if (!dateFormatter) {
         dateFormatter = [[NSDateFormatter alloc] init];
@@ -72,6 +72,11 @@
     [self.contentView addSubview:self.summaryLabel];
             [self.contentView addSubview:self.subtitleView];
     [self.contentView bringSubviewToFront:self.addSwitch];
+    
+    if (fblink!=nil)
+        self.contentView.backgroundColor=[UIColor colorWithRed:.29 green:.40 blue:64.3 alpha:.5];
+    else
+        self.contentView.backgroundColor=[UIColor clearColor];
    /* CGFloat summaryLabelX = self.dayLabel.frame.origin.x + self.dayLabel.frame.size.width + kSummaryLeftMargin;
     CGRect summaryLabelFrame = CGRectMake(summaryLabelX, 0, self.frame.size.width - summaryLabelX, self.frame.size.height);
     
