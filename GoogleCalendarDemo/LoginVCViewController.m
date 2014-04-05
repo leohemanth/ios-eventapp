@@ -7,7 +7,9 @@
 //
 
 #import "LoginVCViewController.h"
+#import "Event.h"
 # import <FacebookSDK/FacebookSDK.h>
+#import "ADManagedObjectContext.h"
 
 @interface LoginVCViewController ()
 
@@ -40,12 +42,13 @@
 // This method will be called when the user information has been fetched
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView
                             user:(id<FBGraphUser>)user {
-    
+    [self requestEvents];
 }
 
 // Implement the loginViewShowingLoggedInUser: delegate method to modify your app's UI for a logged-in user experience
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
    // self.statusLabel.text = @"You're logged in as";
+    
 }
 
 // Implement the loginViewShowingLoggedOutUser: delegate method to modify your app's UI for a logged-out user experience
@@ -95,6 +98,140 @@
                           otherButtonTitles:nil] show];
     }
 }
+
+- (void)requestEvents
+{
+    // We will request the user's events
+    // These are the permissions we need:
+    NSArray *permissionsNeeded = @[@"user_events",@"friends_events",@"friends_about_me",@"friends_location",@"friends_groups",@"user_friends",@"user_groups"];
+    
+    // Request the permissions the user currently has
+    [FBRequestConnection startWithGraphPath:@"/me/permissions"
+                          completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                              if (!error){
+                                  NSDictionary *currentPermissions= [(NSArray *)[result data] objectAtIndex:0];
+                                  NSLog([NSString stringWithFormat:@"current permissions %@", currentPermissions]);
+                                  NSMutableArray *requestPermissions = [[NSMutableArray alloc] initWithArray:@[]];
+                                  
+                                  // Check if all the permissions we need are present in the user's current permissions
+                                  // If they are not present add them to the permissions to be requested
+                                  for (NSString *permission in permissionsNeeded){
+                                      if (![currentPermissions objectForKey:permission]){
+                                          [requestPermissions addObject:permission];
+                                      }
+                                  }
+                                  
+                                  // If we have permissions to request
+                                  if ([requestPermissions count] > 0){
+                                      // Ask for the missing permissions
+                                      [FBSession.activeSession requestNewReadPermissions:requestPermissions
+                                                                       completionHandler:^(FBSession *session, NSError *error) {
+                                                                           if (!error) {
+                                                                               // Permission granted
+                                                                               NSLog([NSString stringWithFormat:@"new permissions %@", [FBSession.activeSession permissions]]);
+                                                                               // We can request the user information
+                                                                               [self fqlRequest];
+                                                                           } else {
+                                                                               // An error occurred, we need to handle the error
+                                                                               // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+                                                                               NSLog([NSString stringWithFormat:@"error %@", error.description]);
+                                                                           }
+                                                                       }];
+                                  } else {
+                                      // Permissions are present
+                                      // We can request the user information
+                                      [self fqlRequest];
+                                  }
+                                  
+                              } else {
+                                  // An error occurred, we need to handle the error
+                                  // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+                                  NSLog([NSString stringWithFormat:@"error %@", error.description]);
+                              }
+                          }];
+}
+
+- (void)makeRequestForUserEvents
+{
+    [FBRequestConnection startWithGraphPath:@"me/events?fields=cover,name,start_time"
+                          completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                              if (!error) {
+                                  // Success! Include your code to handle the results here
+                                  NSLog([NSString stringWithFormat:@"user events: %@", result]);
+                              } else {
+                                  // An error occurred, we need to handle the error
+                                  // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+                                  NSLog([NSString stringWithFormat:@"error %@", error.description]);
+                              }
+                          }];
+}
+
+
+-(void) fqlRequest{
+    // Query to fetch the active user's friends, limit to 25.
+    
+    NSString *query =
+    @"SELECT name, venue, location, start_time, eid FROM event"
+    @" WHERE eid IN (SELECT eid FROM event_member WHERE uid IN ("
+    @" SELECT uid2 FROM friend WHERE uid1 = me() and uid2 in ("
+    @" SELECT uid FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) or uid=me()"
+    @" AND current_location.state = 'California')) or uid=me())";
+    
+    
+ 
+    // Set up the query parameter
+    NSDictionary *queryParam = @{ @"q": query };
+    // Make the API request that uses FQL
+    [FBRequestConnection startWithGraphPath:@"/fql"
+                                 parameters:queryParam
+                                 HTTPMethod:@"GET"
+                          completionHandler:^(FBRequestConnection *connection,
+                                              id result,
+                                              NSError *error) {
+                              if (error) {
+                                  NSLog(@"Error: %@", [error localizedDescription]);
+                              } else {
+                                  NSLog(@"Result: %@", result);
+                                  [self parseResult:result];
+                              }
+                          }];
+}
+
+-(void) parseResult:(id) result
+{
+    NSArray *resultArray = (NSArray *)[result valueForKey:@"data"];
+    NSMutableArray *eventArray = [[NSMutableArray alloc]init];
+    NSManagedObjectContext *context = [ADManagedObjectContext sharedContext];
+    
+    static NSDateFormatter *dayFormatter, *timeFormatter;
+    if (!dayFormatter || !timeFormatter) {
+        dayFormatter = [[NSDateFormatter alloc] init];
+        dayFormatter.dateFormat = @"yyyy-MM-dd";
+        timeFormatter = [[NSDateFormatter alloc] init];
+        timeFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
+    }
+
+    for(int i=0;i<resultArray.count;i++)
+    {
+        FBGraphObject *eventData = resultArray[i];
+        Event * fbEvent = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
+       
+        fbEvent.googleid=eventData[@"eid"];
+        fbEvent.location=eventData[@"location"];
+        fbEvent.summary=eventData[@"name"];
+        fbEvent.desc=eventData[@"name"];
+        fbEvent.fbid=eventData[@"eid"];
+
+        NSString * stDateString = eventData[@"start_time"];
+        NSString *stDatevalue = [stDateString substringWithRange:NSMakeRange(0,19)];
+        fbEvent.date = [timeFormatter dateFromString:stDatevalue];
+        
+        [eventArray addObject:fbEvent];
+
+    }
+    [context save:nil];
+    
+    }
 
 - (void)didReceiveMemoryWarning
 {

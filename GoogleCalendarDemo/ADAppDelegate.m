@@ -44,11 +44,10 @@
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
     return [FBAppCall handleOpenURL:url
-                  sourceApplication:sourceApplication
-                       ];
-}
+                  sourceApplication:sourceApplication];
+            }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-   // [FBAppCall handleDidBecomeActiveWithSession:[PFFacebookUtils session]];
+    [FBAppCall handleDidBecomeActiveWithSession:[PFFacebookUtils session]];
 }
 @end

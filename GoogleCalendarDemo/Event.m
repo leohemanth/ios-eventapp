@@ -17,5 +17,5 @@
 @dynamic googleid;
 @dynamic location;
 @dynamic summary;
-
+@dynamic fbid;
 @end
