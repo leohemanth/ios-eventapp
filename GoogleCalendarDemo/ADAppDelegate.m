@@ -9,6 +9,7 @@
 #import "ADAppDelegate.h"
 #import "ADCalendarViewController.h"
 #import <Parse/Parse.h>
+#import "LoginVCViewController.h"
 
 @implementation ADAppDelegate
 
@@ -22,8 +23,21 @@
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     [PFFacebookUtils initializeFacebook];
+    
+    //self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    // Override point for customization after application launch.
+    
+    // Load the FBProfilePictureView
+    // You can find more information about why you need to add this line of code in our troubleshooting guide
+    // https://developers.facebook.com/docs/ios/troubleshooting#objc
+    [FBProfilePictureView class];
+    
+    
+    
     return YES;
 }
+
+
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
@@ -31,10 +45,10 @@
          annotation:(id)annotation {
     return [FBAppCall handleOpenURL:url
                   sourceApplication:sourceApplication
-                        withSession:[PFFacebookUtils session]];
+                       ];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    [FBAppCall handleDidBecomeActiveWithSession:[PFFacebookUtils session]];
+   // [FBAppCall handleDidBecomeActiveWithSession:[PFFacebookUtils session]];
 }
 @end

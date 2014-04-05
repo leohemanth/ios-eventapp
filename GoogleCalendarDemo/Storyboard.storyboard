@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ffb-Rg-jE8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ffb-Rg-jE8">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
         <!--Calendar View Controller - Root View Controller-->
@@ -89,25 +89,6 @@
             </objects>
             <point key="canvasLocation" x="600" y="53"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="691-v5-8E9">
-            <objects>
-                <viewController id="b5W-3u-JJ5" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="yQG-l6-cHL"/>
-                        <viewControllerLayoutGuide type="bottom" id="qEe-lu-25t"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="vqa-nB-VmR">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="bbI-Od-2GO"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="H02-do-9DO" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-204" y="53"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="BLF-oD-Cmq">
             <objects>
@@ -116,12 +97,31 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="b5W-3u-JJ5" kind="relationship" relationship="rootViewController" id="V2j-28-bKX"/>
+                        <segue destination="czc-a1-tri" kind="relationship" relationship="rootViewController" id="yBR-Mh-6ZM"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GB7-kX-v3u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-608" y="53"/>
+            <point key="canvasLocation" x="-682" y="63"/>
+        </scene>
+        <!--LoginVC View Controller-->
+        <scene sceneID="Gq9-fd-2iD">
+            <objects>
+                <viewController id="czc-a1-tri" customClass="LoginVCViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ZMi-BK-dii"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZjG-cF-mG8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ek8-nS-9ot">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="BNy-lH-1ct"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZUY-QF-Fwx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-207" y="53"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
