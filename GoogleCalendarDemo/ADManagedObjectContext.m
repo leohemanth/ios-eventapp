@@ -143,8 +143,8 @@
         for(NSManagedObject * filter in filterObjArray)
         {
             NSFetchRequest *fetchDelRequest = [[NSFetchRequest alloc] initWithEntityName:@"Event"];
-            fetchRequest.predicate = [NSPredicate predicateWithFormat:@"summary = %@",((EntityFilter*)filter).summary];
-            NSArray *oldEvents = [context executeFetchRequest:fetchRequest error:nil];
+            fetchDelRequest.predicate = [NSPredicate predicateWithFormat:@"summary = %@",((EntityFilter*)filter).summary];
+            NSArray *oldEvents = [context executeFetchRequest:fetchDelRequest error:nil];
             for (NSManagedObject *oldEvent in oldEvents) {
                 [context deleteObject:oldEvent];
             }

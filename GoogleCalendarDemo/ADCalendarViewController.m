@@ -14,6 +14,8 @@
 #import "DetailViewTableViewController.h"
 #import "EntityFilter.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "DetailViewController.h"
+
 #define NULL_TO_NIL(obj) ({ __typeof__ (obj) __obj = (obj); __obj == [NSNull null] ? nil : obj; })
 
 @interface ADCalendarViewController ()
@@ -44,7 +46,7 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(updateCalendar) forControlEvents:UIControlEventValueChanged];
     [self.tableView setContentOffset:CGPointMake(0, -self.refreshControl.frame.size.height) animated:NO];
-   [self updateCalendar];
+    [self updateCalendar];
     [self fqlRequest];
 }
 
@@ -117,9 +119,9 @@
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-
+        
         NSLog(@"swiped!! %@",[self.fetchedResultsController objectAtIndexPath:indexPath]);
-       
+        
         
         //Get the context
         NSManagedObjectContext *context = [ADManagedObjectContext sharedContext];
@@ -146,7 +148,7 @@
         [context save:nil];
         NSError*error;
         [self.fetchedResultsController performFetch:&error];
-         [self.tableView reloadData];
+        [self.tableView reloadData];
         
     }
 }
@@ -160,21 +162,29 @@
 //        return NO;
 //    }
 //}
-//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    NSLog(@"in prepare for segue!!");
 //    Event *event = [self.fetchedResultsController objectAtIndexPath:self.tableView.indexPathForSelectedRow];
 //    if ([segue.identifier isEqualToString:@"eventDetail"]) {
-//        DetailViewTableViewController* detail= segue.destinationViewController;
-//        detail.event=event;
+//        DetailViewController* detail= segue.destinationViewController;
+//        [detail fillDetails:event];
 //    }
 //    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
-//}
+}
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     Event *event = [self.fetchedResultsController objectAtIndexPath:self.tableView.indexPathForSelectedRow];
-    DetailViewTableViewController* detail= [[DetailViewTableViewController alloc ] init];
-    detail.event=event;
-    [self.navigationController pushViewController:detail animated:YES];
-    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
+    DetailViewController *viewController = [[UIStoryboard storyboardWithName:@"Storyboard" bundle:nil] instantiateViewControllerWithIdentifier:@"detailView"];
+    [self.navigationController pushViewController:viewController animated:YES];
+    //    DetailViewTableViewController* detail= [[DetailViewTableViewController alloc ] init];
+    //    detail.event=event;
+ //   DetailViewController *detail = [[DetailViewController alloc]init];
+ //   NSLog(@"didSelect %@",event);
+    [viewController fillDetails:event];
+//    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
+ //   [self.navigationController pushViewController:detail animated:YES];
+    
 }
+
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     switch (type) {
         case NSFetchedResultsChangeInsert:

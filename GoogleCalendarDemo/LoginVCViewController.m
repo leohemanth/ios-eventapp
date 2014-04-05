@@ -10,6 +10,7 @@
 #import "Event.h"
 # import <FacebookSDK/FacebookSDK.h>
 #import "ADManagedObjectContext.h"
+#import <Parse/Parse.h>
 #import "ADCalendarViewController.h"
 @interface LoginVCViewController ()
 
@@ -43,6 +44,15 @@
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView
                             user:(id<FBGraphUser>)user {
     [self requestEvents];
+    [PFFacebookUtils logInWithPermissions:@[@"basic_info",@"email"] block:^(PFUser *user, NSError *error) {
+        if (!user) {
+            NSLog(@"Uh oh. The user cancelled the Facebook login.");
+        } else if (user.isNew) {
+            NSLog(@"User signed up and logged in through Facebook!");
+        } else {
+            NSLog(@"User logged in through Facebook!");
+        }
+    }];
 }
 
 // Implement the loginViewShowingLoggedInUser: delegate method to modify your app's UI for a logged-in user experience
@@ -130,7 +140,7 @@
                                                                                //NSLog([NSString stringWithFormat:@"new permissions %@", [FBSession.activeSession permissions]]);
                                                                                // We can request the user information
                                                                              //  [self fqlRequest];
-                                                                               [self.navigationController pushViewController:[[ADCalendarViewController alloc] init] animated:YES];
+                                                                             //  [self.navigationController pushViewController:[[ADCalendarViewController alloc] init] animated:YES];
                                                                            } else {
                                                                                // An error occurred, we need to handle the error
                                                                                // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/

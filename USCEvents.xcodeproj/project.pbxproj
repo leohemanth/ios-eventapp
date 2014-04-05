@@ -42,6 +42,8 @@
 		4950F73118839B610030AD3E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4950F72F18839B610030AD3E /* InfoPlist.strings */; };
 		4950F73318839B610030AD3E /* GoogleCalendarDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4950F73218839B610030AD3E /* GoogleCalendarDemoTests.m */; };
 		49BBC27318908E6900D209DB /* ADCalendarEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BBC27218908E6900D209DB /* ADCalendarEventCell.m */; };
+		5359E4A518F062680098283B /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5359E4A418F062680098283B /* DetailViewController.m */; };
+		5359E4A718F065070098283B /* calIcon.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 5359E4A618F065070098283B /* calIcon.jpeg */; };
 		53AB465D18EFE10A0087D51A /* FbEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AB465C18EFE10A0087D51A /* FbEvents.m */; };
 		AA69CA33C1F447D1890FBA1A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B55AC4177C114FCEA0FE6666 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -105,6 +107,9 @@
 		4950F73218839B610030AD3E /* GoogleCalendarDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoogleCalendarDemoTests.m; sourceTree = "<group>"; };
 		49BBC27118908E6900D209DB /* ADCalendarEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADCalendarEventCell.h; sourceTree = "<group>"; };
 		49BBC27218908E6900D209DB /* ADCalendarEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADCalendarEventCell.m; sourceTree = "<group>"; };
+		5359E4A318F062680098283B /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		5359E4A418F062680098283B /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		5359E4A618F065070098283B /* calIcon.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = calIcon.jpeg; sourceTree = "<group>"; };
 		53AB465B18EFE10A0087D51A /* FbEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FbEvents.h; sourceTree = "<group>"; };
 		53AB465C18EFE10A0087D51A /* FbEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FbEvents.m; sourceTree = "<group>"; };
 		B55AC4177C114FCEA0FE6666 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -151,6 +156,7 @@
 		4950F70118839B610030AD3E = {
 			isa = PBXGroup;
 			children = (
+				5359E4A618F065070098283B /* calIcon.jpeg */,
 				1814942618EFF15E00836073 /* EventFilter.h */,
 				1814942718EFF15E00836073 /* EventFilter.m */,
 				4950F71318839B610030AD3E /* USC Events */,
@@ -219,6 +225,8 @@
 				1814942418EFED8B00836073 /* EntityFilter.m */,
 				53AB465B18EFE10A0087D51A /* FbEvents.h */,
 				53AB465C18EFE10A0087D51A /* FbEvents.m */,
+				5359E4A318F062680098283B /* DetailViewController.h */,
+				5359E4A418F062680098283B /* DetailViewController.m */,
 				4950F71F18839B610030AD3E /* Images.xcassets */,
 				4950F71418839B610030AD3E /* Supporting Files */,
 			);
@@ -336,6 +344,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4950F71818839B610030AD3E /* InfoPlist.strings in Resources */,
+				5359E4A718F065070098283B /* calIcon.jpeg in Resources */,
 				4950F72018839B610030AD3E /* Images.xcassets in Resources */,
 				183AF76618ECBF9800E62EE5 /* Storyboard.storyboard in Resources */,
 			);
@@ -402,6 +411,7 @@
 				4906A8781884AC7E000FFEE8 /* ADCalendarViewController.m in Sources */,
 				49BBC27318908E6900D209DB /* ADCalendarEventCell.m in Sources */,
 				18EE492F18EF988D00C1CD70 /* LoginVCViewController.m in Sources */,
+				5359E4A518F062680098283B /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

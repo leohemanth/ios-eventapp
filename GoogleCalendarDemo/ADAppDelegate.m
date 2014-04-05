@@ -20,6 +20,13 @@
 //    [self.window makeKeyAndVisible];
     [Parse setApplicationId:@"SZvrNV7McrZ3jTD7WA2tvF7HxC2RssUBx1upFIx3"
                   clientKey:@"T0t9VgkBqGUhSdGGWPUwbHnXASXqRh9lvAfH43sd"];
+    
+    [Parse setApplicationId:@"vHM9qbKuVCcwyAsh1VH96VvT7EOb8N8GJxjOcMuE"
+                  clientKey:@"gWK34wKYlqgs6SghlMQ94e9QCX9hdLoPU66MtpjY"];
+    
+    
+    
+    
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     [PFFacebookUtils initializeFacebook];
@@ -37,7 +44,7 @@
     return YES;
 }
 
-
+/*
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
@@ -45,9 +52,19 @@
          annotation:(id)annotation {
     return [FBAppCall handleOpenURL:url
                   sourceApplication:sourceApplication];
-            }
+            }*/
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [FBAppCall handleDidBecomeActiveWithSession:[PFFacebookUtils session]];
 }
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    return [FBAppCall handleOpenURL:url
+                  sourceApplication:sourceApplication
+                        ];
+}
+
 @end
