@@ -72,7 +72,6 @@
     [self.contentView addSubview:self.summaryLabel];
             [self.contentView addSubview:self.subtitleView];
     [self.contentView bringSubviewToFront:self.addSwitch];
-    NSLog(@"%@",[self.contentView subviews]);
    /* CGFloat summaryLabelX = self.dayLabel.frame.origin.x + self.dayLabel.frame.size.width + kSummaryLeftMargin;
     CGRect summaryLabelFrame = CGRectMake(summaryLabelX, 0, self.frame.size.width - summaryLabelX, self.frame.size.height);
     

@@ -103,8 +103,8 @@
 		4950F70118839B610030AD3E = {
 			isa = PBXGroup;
 			children = (
-				4950F71318839B610030AD3E /* USC Tram */,
-				4950F72C18839B610030AD3E /* USCTramTests */,
+				4950F71318839B610030AD3E /* USC Events */,
+				4950F72C18839B610030AD3E /* USCEventsTests */,
 				4950F70C18839B610030AD3E /* Frameworks */,
 				4950F70B18839B610030AD3E /* Products */,
 				C2DD7D3F12A7404899E6C768 /* Pods.xcconfig */,
@@ -133,7 +133,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		4950F71318839B610030AD3E /* USC Tram */ = {
+		4950F71318839B610030AD3E /* USC Events */ = {
 			isa = PBXGroup;
 			children = (
 				4950F71C18839B610030AD3E /* ADAppDelegate.h */,
@@ -153,7 +153,7 @@
 				4950F71F18839B610030AD3E /* Images.xcassets */,
 				4950F71418839B610030AD3E /* Supporting Files */,
 			);
-			name = "USC Tram";
+			name = "USC Events";
 			path = GoogleCalendarDemo;
 			sourceTree = "<group>";
 		};
@@ -168,13 +168,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		4950F72C18839B610030AD3E /* USCTramTests */ = {
+		4950F72C18839B610030AD3E /* USCEventsTests */ = {
 			isa = PBXGroup;
 			children = (
 				4950F73218839B610030AD3E /* GoogleCalendarDemoTests.m */,
 				4950F72D18839B610030AD3E /* Supporting Files */,
 			);
-			name = USCTramTests;
+			name = USCEventsTests;
 			path = GoogleCalendarDemoTests;
 			sourceTree = "<group>";
 		};
@@ -242,7 +242,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4950F70518839B610030AD3E /* Build configuration list for PBXProject "USC Events" */;
+			buildConfigurationList = 4950F70518839B610030AD3E /* Build configuration list for PBXProject "USCEvents" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -515,7 +515,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4950F70518839B610030AD3E /* Build configuration list for PBXProject "USC Events" */ = {
+		4950F70518839B610030AD3E /* Build configuration list for PBXProject "USCEvents" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4950F73418839B610030AD3E /* Debug */,
