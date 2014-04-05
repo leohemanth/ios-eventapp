@@ -244,7 +244,12 @@
     for(int i=0;i<resultArray.count;i++)
     {
         FBGraphObject *eventData = resultArray[i];
-        Event * fbEvent = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Event"];
+        fetchRequest.predicate = [NSPredicate predicateWithFormat:@"fbid == %@",NULL_TO_NIL(eventData[@"eid"])];
+        NSArray *results = [context executeFetchRequest:fetchRequest error:nil];
+        
+        Event * fbEvent = (results.count > 0) ? results[0] : [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
+        
         fbEvent.googleid=NULL_TO_NIL(eventData[@"eid"]);
         fbEvent.location=NULL_TO_NIL(eventData[@"location"]);
         fbEvent.summary=NULL_TO_NIL(eventData[@"name"]);
