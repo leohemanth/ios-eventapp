@@ -46,8 +46,8 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
 //    [self.refreshControl addTarget:self action:@selector(updateCalendar) forControlEvents:UIControlEventValueChanged];
     [self.tableView setContentOffset:CGPointMake(0, -self.refreshControl.frame.size.height) animated:NO];
-    [self updateCalendar];
-    [self fqlRequest];
+  //  [self updateCalendar];
+  //  [self fqlRequest];
 }
 
 // Fetch calendar events. Show a pull-down spinner while updating.
@@ -76,6 +76,10 @@
     return self.fetchedResultsController.sections.count;
 }
 
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 80;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.fetchedResultsController.sections[section] numberOfObjects];
 }

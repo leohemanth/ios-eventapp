@@ -10,7 +10,7 @@
 
 @interface ADCalendarEventCell ()
 @property (strong, nonatomic) UILabel *summaryLabel;
-@property (strong, nonatomic) UILabel *monthLabel;
+@property (strong, nonatomic) UILabel *monthLabel,*timeLabel;
 @property (strong, nonatomic) UILabel *dayLabel;
 @property (strong, nonatomic) UISwitch *removeObject;
 @property (strong,nonatomic) IBOutlet UISwitch * addSwitch;
@@ -25,17 +25,25 @@
         dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.dateFormat = @"MMM";
     }
+    
+    static NSDateFormatter *timeFormatter;
+    if (!timeFormatter) {
+        timeFormatter = [[NSDateFormatter alloc] init];
+        timeFormatter.dateFormat = @"HH:mm";
+    }
 
-    NSInteger kMonthTopMargin = 4;
-    NSInteger kMonthLeftMargin = 10;
+    self.frame=CGRectMake(self.contentView.frame.origin.x, self.contentView.frame.origin.x, self.contentView.frame.size.width,80);
+
+    NSInteger kMonthTopMargin = 5;
+    NSInteger kMonthLeftMargin = 20;
     NSInteger kDayTopMargin = -4;
-    NSInteger kSummaryLeftMargin = 12;
+    NSInteger kSummaryLeftMargin = 32;
 
    // [[self.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 
-    CGFloat monthLabelHeight = self.frame.size.height * .3;
-    CGFloat dayLabelHeight = self.frame.size.height * .7;
-
+    CGFloat monthLabelHeight = self.frame.size.height * .25;
+    CGFloat dayLabelHeight = self.frame.size.height * .5;
+    CGFloat timeLabelHeight = self.frame.size.height * .25;
     if(self.monthLabel==nil) self.monthLabel = [[UILabel alloc] init];
     self.monthLabel.text = [[dateFormatter stringFromDate:date] uppercaseString];
     self.monthLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
@@ -59,14 +67,24 @@
     self.dayLabel.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:self.dayLabel];
 
+    if(self.timeLabel==nil) self.timeLabel = [[UILabel alloc] init];
+    self.timeLabel.text = [timeFormatter stringFromDate:date];
+    self.timeLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize]-5];
+    CGFloat timeFontSize = self.timeLabel.font.pointSize / [self.timeLabel.text sizeWithFont:self.timeLabel.font].height * timeLabelHeight;
+    self.timeLabel.font = [UIFont boldSystemFontOfSize:timeFontSize];
+    self.timeLabel.textColor = [UIColor grayColor];
+    CGSize timeLabelSize = [self.timeLabel.text sizeWithFont:self.timeLabel.font];
+    self.timeLabel.frame = CGRectMake(kMonthLeftMargin-4, kMonthTopMargin + dayLabelHeight+10, timeLabelSize.width, timeLabelSize.height);
+    [self.contentView addSubview:self.timeLabel];
+
     CGFloat summaryLabelX = self.dayLabel.frame.origin.x + self.dayLabel.frame.size.width + kSummaryLeftMargin;
     CGRect summaryLabelFrame = CGRectMake(summaryLabelX, 0, self.frame.size.width - summaryLabelX, self.frame.size.height-20);
-    CGRect locationLabelFrame = CGRectMake(summaryLabelX, self.frame.size.height-20, self.frame.size.width - summaryLabelX, self.frame.size.height-20);
+    CGRect locationLabelFrame = CGRectMake(summaryLabelX, 30, self.frame.size.width - summaryLabelX, self.frame.size.height-20);
 
     if(self.summaryLabel==nil) self.summaryLabel = [[UILabel alloc] initWithFrame:summaryLabelFrame];
     if(self.subtitleView==nil) self.subtitleView = [[UILabel alloc] initWithFrame:locationLabelFrame];
-    self.summaryLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
-    self.subtitleView.font = [UIFont systemFontOfSize:[UIFont systemFontSize]-5];
+    self.summaryLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize]+5];
+    self.subtitleView.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
     self.summaryLabel.text = summary;
     self.subtitleView.text =location;
     [self.contentView addSubview:self.summaryLabel];
@@ -86,5 +104,8 @@
     
 }
 
-
+-(void)layoutSubviews
+{
+    self.contentView.frame = self.bounds;
+}
 @end
