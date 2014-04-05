@@ -28,17 +28,66 @@
     timeFormatter = [[NSDateFormatter alloc] init];
     timeFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
     
-    self.lblEndDate.text = [timeFormatter stringFromDate:self.currentEvent.date];
-    self.lblStartDate.text = [timeFormatter stringFromDate:self.currentEvent.date];
+    
+    NSString * startDateTime = [timeFormatter stringFromDate:self.currentEvent.date];
+    NSString *startDate = @"",*startTime=@"";
+    NSString * endDateTime = [timeFormatter stringFromDate:self.currentEvent.endDate];
+    NSString *endDate=@"",*endTime=@"";
+    
+    
+    if(startDateTime.length>9)
+    {
+        NSArray* foo = [startDateTime componentsSeparatedByString: @"T"];
+        if(foo.count>0)
+        startDate = [foo objectAtIndex:0];
+        if(foo.count>1)
+        startTime = [foo objectAtIndex:1];
+    }
+    
+    if(endDateTime.length>9)
+    {
+        
+        NSArray* foo = [endDateTime componentsSeparatedByString: @"T"];
+        if(foo.count>0)
+        endDate = [foo objectAtIndex:0];
+        if(foo.count>1)
+        endTime = [foo objectAtIndex:1];
+    }
+    
+    
+ 
+    self.lblEndDate.text = [NSString stringWithFormat:@"%@  %@",startDate,startTime];
+    self.lblStartDate.text = [NSString stringWithFormat:@"%@  %@",endDate,endTime];;
     
     self.lblLocation.text = self.currentEvent.location;
     self.lblTitle.text = self.currentEvent.summary;
     self.lblEventURL.text = self.currentEvent.fblink;
     self.lblDesc.text=self.currentEvent.desc;
+    
     NSURL *url = [NSURL URLWithString:self.currentEvent.pic];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    UIImage *img = [[UIImage alloc] initWithData:data];
+    
+    /*NSArray *paths = NSSearchPathForDirectoriesInDomains
+    (NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    
+    //make a file name to write the data to using the documents directory:
+    NSString *path = [NSString stringWithFormat:@"%@/usc.png",
+                      documentsDirectory];*/
+    NSData *data;
+    UIImage *image;
+    if(url!=NULL)
+    {
+         data= [NSData dataWithContentsOfURL:url];
+        image = [[UIImage alloc] initWithData:data];
+    }
+    else
+    {
+         image=[UIImage imageNamed:@"usc.jpeg"];
+    }
+    
+    
     //CGSize size = img.size;
+<<<<<<< HEAD
     [self.bannerView setImage:img];
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStyleDone target:self action:@selector(addToCall)];
     
@@ -59,6 +108,9 @@
     addController.event=event;
     [self presentViewController:addController animated:YES completion:nil];
 }
+    [self.bannerView setImage:image];
+    // Do any additional setup after loading the view.
+   }
 
 -(void)viewDidAppear:(BOOL)animated{
     NSLog(@"b:%f",self.scrollView.contentSize.height);
