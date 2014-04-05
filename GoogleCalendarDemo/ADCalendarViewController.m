@@ -12,8 +12,10 @@
 #import "ADCalendarEventCell.h"
 #import "Event.h"
 #import "DetailViewTableViewController.h"
+#import "EntityFilter.h"
 #import <FacebookSDK/FacebookSDK.h>
 #define NULL_TO_NIL(obj) ({ __typeof__ (obj) __obj = (obj); __obj == [NSNull null] ? nil : obj; })
+
 @interface ADCalendarViewController ()
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
@@ -115,7 +117,37 @@
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.tableView reloadData];
+
+        NSLog(@"swiped!! %@",[self.fetchedResultsController objectAtIndexPath:indexPath]);
+       
+        
+        //Get the context
+        NSManagedObjectContext *context = [ADManagedObjectContext sharedContext];
+        
+        NSManagedObject *eventFilter = [NSEntityDescription insertNewObjectForEntityForName:@"EntityFilter" inManagedObjectContext:context];
+        
+        EntityFilter *filter = (EntityFilter *)eventFilter;
+        Event * selectedEvent = (Event *) [self.fetchedResultsController objectAtIndexPath:indexPath];
+        filter.eventid=selectedEvent.googleid;
+        filter.field=@"title";
+        filter.summary=selectedEvent.summary;
+        filter.type=selectedEvent.fbid;
+        filter.value=selectedEvent.description;
+        
+        //Delete the row from event
+        // Delete old events.
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Event"];
+        fetchRequest.predicate = [NSPredicate predicateWithFormat:@"summary = %@", selectedEvent.summary];
+        NSArray *oldEvents = [context executeFetchRequest:fetchRequest error:nil];
+        for (NSManagedObject *oldEvent in oldEvents) {
+            [context deleteObject:oldEvent];
+        }
+        
+        [context save:nil];
+        NSError*error;
+        [self.fetchedResultsController performFetch:&error];
+         [self.tableView reloadData];
+        
     }
 }
 //-(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender{
@@ -217,7 +249,12 @@
     for(int i=0;i<resultArray.count;i++)
     {
         FBGraphObject *eventData = resultArray[i];
-        Event * fbEvent = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Event"];
+        fetchRequest.predicate = [NSPredicate predicateWithFormat:@"fbid == %@",NULL_TO_NIL(eventData[@"eid"])];
+        NSArray *results = [context executeFetchRequest:fetchRequest error:nil];
+        
+        Event * fbEvent = (results.count > 0) ? results[0] : [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
+        
         fbEvent.googleid=NULL_TO_NIL(eventData[@"eid"]);
         fbEvent.location=NULL_TO_NIL(eventData[@"location"]);
         fbEvent.summary=NULL_TO_NIL(eventData[@"name"]);

@@ -82,8 +82,9 @@
     
     self.removeObject = [[UISwitch alloc]init];
     [self.contentView addSubview:self.removeObject];*/
-
+    
     
 }
+
 
 @end

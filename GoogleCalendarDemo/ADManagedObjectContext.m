@@ -9,6 +9,7 @@
 #import "ADManagedObjectContext.h"
 #import "ADCalendarViewController.h"
 #import "Event.h"
+#import "EntityFilter.h"
 @implementation ADManagedObjectContext
 
 // Get or create a managed object context.
@@ -41,16 +42,41 @@
     }
     
     NSManagedObjectContext *context = [ADManagedObjectContext sharedContext];
+    
     [context performBlockAndWait:^{
         // Add all new events.
         for (NSDictionary *eventData in events) {
             // Find an event if it is already stored or create it otherwise.
             Event *event;
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Event"];
-            fetchRequest.predicate = [NSPredicate predicateWithFormat:@"googleid == %@", eventData[@"id"]];
+            NSString *fbID=@"";
+            
+            //Check if the event is FB or Google
+            //If FB filter based on fbid or else based on googleid
+            if ([eventData[@"id"] rangeOfString:@"@facebook.com"].location != NSNotFound) {
+                NSError *error;
+                NSString *pattern = @"e(.*)@facebook.com";
+                NSString *string = eventData[@"id"];
+                NSRange range = NSMakeRange(0, string.length);
+                NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:&error];
+                NSArray *matches = [regex matchesInString:string options:NSMatchingReportProgress range:range];
+    
+                fbID = [eventData[@"id"] substringWithRange:[matches[0] rangeAtIndex:1]];
+                fetchRequest.predicate = [NSPredicate predicateWithFormat:@"fbid == %@",fbID];
+            }
+            else
+            {
+                fetchRequest.predicate = [NSPredicate predicateWithFormat:@"googleid == %@", eventData[@"id"]];
+            }
+            
             NSArray *results = [context executeFetchRequest:fetchRequest error:nil];
+            
             event = (results.count > 0) ? results[0] : [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
             
+            if(results.count > 0)
+            {
+                NSLog(@"matched");
+            }
             // Find the start date of the event.
             NSDate *startDate,*endDate;
             /* if (eventData[@"start"][@"date"]) {
@@ -82,9 +108,9 @@
                 NSLog(@"%@",event.fblink);
                 event.fbid =[eventData[@"id"] substringWithRange:[matches[0] rangeAtIndex:1]];
             }
-            [event setValue:eventData[@"title"] forKey:@"summary"];
             
-
+            [event setValue:eventData[@"title"] forKey:@"summary"];
+             
             [event setValue:startDate forKey:@"date"];
         
             [event setValue:eventData[@"location"] forKey:@"location"];
@@ -106,6 +132,22 @@
         NSArray *oldEvents = [context executeFetchRequest:fetchRequest error:nil];
         for (NSManagedObject *oldEvent in oldEvents) {
             [context deleteObject:oldEvent];
+        }
+        
+        NSString *titleConstant = @"title";
+        // Get all the title filtered events.
+        NSFetchRequest *fetchFilterRequest = [[NSFetchRequest alloc] initWithEntityName:@"EntityFilter"];
+        fetchFilterRequest.predicate = [NSPredicate predicateWithFormat:@"field = %@",titleConstant];
+        NSArray *filterObjArray = [context executeFetchRequest:fetchFilterRequest error:nil];
+        
+        for(NSManagedObject * filter in filterObjArray)
+        {
+            NSFetchRequest *fetchDelRequest = [[NSFetchRequest alloc] initWithEntityName:@"Event"];
+            fetchRequest.predicate = [NSPredicate predicateWithFormat:@"summary = %@",((EntityFilter*)filter).summary];
+            NSArray *oldEvents = [context executeFetchRequest:fetchRequest error:nil];
+            for (NSManagedObject *oldEvent in oldEvents) {
+                [context deleteObject:oldEvent];
+            }
         }
         
         [context save:nil];
