@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1814942518EFED8B00836073 /* EntityFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1814942418EFED8B00836073 /* EntityFilter.m */; };
+		1814942818EFF15E00836073 /* EventFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1814942718EFF15E00836073 /* EventFilter.m */; };
+		1814942B18EFF72500836073 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 1814942A18EFF72500836073 /* Event.m */; };
 		183AF76618ECBF9800E62EE5 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 183AF76518ECBF9800E62EE5 /* Storyboard.storyboard */; };
 		183AF76918ECC38C00E62EE5 /* DetailViewTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183AF76818ECC38C00E62EE5 /* DetailViewTableViewController.m */; };
-		183AF76C18ECC80500E62EE5 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 183AF76B18ECC80500E62EE5 /* Event.m */; };
 		18EE471C18EF905D00C1CD70 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18EE471B18EF905D00C1CD70 /* Parse.framework */; };
 		18EE471E18EF909900C1CD70 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18EE471D18EF909900C1CD70 /* AudioToolbox.framework */; };
 		18EE472018EF90A300C1CD70 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18EE471F18EF90A300C1CD70 /* CFNetwork.framework */; };
@@ -22,6 +24,7 @@
 		18EE472E18EF90F000C1CD70 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18EE472D18EF90F000C1CD70 /* SystemConfiguration.framework */; };
 		18EE492F18EF988D00C1CD70 /* LoginVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EE492E18EF988D00C1CD70 /* LoginVCViewController.m */; };
 		18EE493118EFA98600C1CD70 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18EE493018EFA98600C1CD70 /* FacebookSDK.framework */; };
+		18EE493718EFE75200C1CD70 /* EventFilter+PrivateMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EE493618EFE75200C1CD70 /* EventFilter+PrivateMethods.m */; };
 		4906A8781884AC7E000FFEE8 /* ADCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4906A8771884AC7E000FFEE8 /* ADCalendarViewController.m */; };
 		4945E5251886043E0004CF3C /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4945E5231886043E0004CF3C /* Model.xcdatamodeld */; };
 		4945E5271886054A0004CF3C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4945E5261886054A0004CF3C /* CoreData.framework */; };
@@ -53,11 +56,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1814942318EFED8B00836073 /* EntityFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EntityFilter.h; path = ../EntityFilter.h; sourceTree = "<group>"; };
+		1814942418EFED8B00836073 /* EntityFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EntityFilter.m; path = ../EntityFilter.m; sourceTree = "<group>"; };
+		1814942618EFF15E00836073 /* EventFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventFilter.h; sourceTree = "<group>"; };
+		1814942718EFF15E00836073 /* EventFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventFilter.m; sourceTree = "<group>"; };
+		1814942918EFF72500836073 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		1814942A18EFF72500836073 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		183AF76518ECBF9800E62EE5 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		183AF76718ECC38C00E62EE5 /* DetailViewTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewTableViewController.h; sourceTree = "<group>"; };
 		183AF76818ECC38C00E62EE5 /* DetailViewTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewTableViewController.m; sourceTree = "<group>"; };
-		183AF76A18ECC80500E62EE5 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
-		183AF76B18ECC80500E62EE5 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		18EE471B18EF905D00C1CD70 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		18EE471D18EF909900C1CD70 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		18EE471F18EF90A300C1CD70 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -71,6 +78,8 @@
 		18EE492D18EF988D00C1CD70 /* LoginVCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginVCViewController.h; sourceTree = "<group>"; };
 		18EE492E18EF988D00C1CD70 /* LoginVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginVCViewController.m; sourceTree = "<group>"; };
 		18EE493018EFA98600C1CD70 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		18EE493518EFE75200C1CD70 /* EventFilter+PrivateMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EventFilter+PrivateMethods.h"; sourceTree = "<group>"; };
+		18EE493618EFE75200C1CD70 /* EventFilter+PrivateMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EventFilter+PrivateMethods.m"; sourceTree = "<group>"; };
 		4906A8761884AC7E000FFEE8 /* ADCalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADCalendarViewController.h; sourceTree = "<group>"; };
 		4906A8771884AC7E000FFEE8 /* ADCalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADCalendarViewController.m; sourceTree = "<group>"; };
 		4945E5241886043E0004CF3C /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -139,6 +148,8 @@
 		4950F70118839B610030AD3E = {
 			isa = PBXGroup;
 			children = (
+				1814942618EFF15E00836073 /* EventFilter.h */,
+				1814942718EFF15E00836073 /* EventFilter.m */,
 				4950F71318839B610030AD3E /* USC Events */,
 				4950F72C18839B610030AD3E /* USCEventsTests */,
 				4950F70C18839B610030AD3E /* Frameworks */,
@@ -187,6 +198,8 @@
 				4950F71D18839B610030AD3E /* ADAppDelegate.m */,
 				4906A8761884AC7E000FFEE8 /* ADCalendarViewController.h */,
 				4906A8771884AC7E000FFEE8 /* ADCalendarViewController.m */,
+				18EE493518EFE75200C1CD70 /* EventFilter+PrivateMethods.h */,
+				18EE493618EFE75200C1CD70 /* EventFilter+PrivateMethods.m */,
 				183AF76518ECBF9800E62EE5 /* Storyboard.storyboard */,
 				18EE492D18EF988D00C1CD70 /* LoginVCViewController.h */,
 				18EE492E18EF988D00C1CD70 /* LoginVCViewController.m */,
@@ -197,8 +210,10 @@
 				4945E5281886095C0004CF3C /* ADManagedObjectContext.h */,
 				4945E5291886095C0004CF3C /* ADManagedObjectContext.m */,
 				4945E5231886043E0004CF3C /* Model.xcdatamodeld */,
-				183AF76A18ECC80500E62EE5 /* Event.h */,
-				183AF76B18ECC80500E62EE5 /* Event.m */,
+				1814942918EFF72500836073 /* Event.h */,
+				1814942A18EFF72500836073 /* Event.m */,
+				1814942318EFED8B00836073 /* EntityFilter.h */,
+				1814942418EFED8B00836073 /* EntityFilter.m */,
 				4950F71F18839B610030AD3E /* Images.xcassets */,
 				4950F71418839B610030AD3E /* Supporting Files */,
 			);
@@ -369,12 +384,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1814942B18EFF72500836073 /* Event.m in Sources */,
 				4945E52A1886095C0004CF3C /* ADManagedObjectContext.m in Sources */,
 				183AF76918ECC38C00E62EE5 /* DetailViewTableViewController.m in Sources */,
 				4950F71A18839B610030AD3E /* main.m in Sources */,
 				4945E5251886043E0004CF3C /* Model.xcdatamodeld in Sources */,
-				183AF76C18ECC80500E62EE5 /* Event.m in Sources */,
 				4950F71E18839B610030AD3E /* ADAppDelegate.m in Sources */,
+				18EE493718EFE75200C1CD70 /* EventFilter+PrivateMethods.m in Sources */,
+				1814942518EFED8B00836073 /* EntityFilter.m in Sources */,
+				1814942818EFF15E00836073 /* EventFilter.m in Sources */,
 				4906A8781884AC7E000FFEE8 /* ADCalendarViewController.m in Sources */,
 				49BBC27318908E6900D209DB /* ADCalendarEventCell.m in Sources */,
 				18EE492F18EF988D00C1CD70 /* LoginVCViewController.m in Sources */,

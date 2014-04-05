@@ -7,7 +7,10 @@
 //
 
 #import "EventFilter+PrivateMethods.h"
-
+#import "Event.h"
 @implementation EventFilter (PrivateMethods)
-
+-(void)filterEvent:(Event *)event{
+    EventFilter *entityFilter = (EventFilter*)[NSEntityDescription entityForName:@"EventFilter" inManagedObjectContext:self.managedObjectContext];
+    entityFilter.summary=event.summary;
+}
 @end

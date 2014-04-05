@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ffb-Rg-jE8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ffb-Rg-jE8">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
         <!--Calendar View Controller - Root View Controller-->
@@ -15,20 +15,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ADCalendarViewControllerCellIdentifier" id="a0c-M1-1ln" customClass="ADCalendarEventCell">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="a0c-M1-1ln" id="7kF-eI-c85">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="SDk-Nt-VqS">
-                                            <rect key="frame" x="261" y="6" width="51" height="31"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </switch>
-                                    </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="addSwitch" destination="SDk-Nt-VqS" id="bnT-w6-8hu"/>
                                     <segue destination="2z5-DY-P8C" kind="push" identifier="eventDetail" id="NN2-VK-z7i"/>
                                 </connections>
                             </tableViewCell>
@@ -39,8 +32,19 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Root View Controller" id="33K-A0-Tpb"/>
+                    <connections>
+                        <outlet property="searchDisplayController" destination="7xT-N9-Igw" id="pct-zc-fbI"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TBi-5B-LJq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="7xT-N9-Igw">
+                    <connections>
+                        <outlet property="delegate" destination="s0j-9D-f0j" id="O8J-v1-5bj"/>
+                        <outlet property="searchContentsController" destination="s0j-9D-f0j" id="E5I-bp-2vM"/>
+                        <outlet property="searchResultsDataSource" destination="s0j-9D-f0j" id="MY4-qt-jre"/>
+                        <outlet property="searchResultsDelegate" destination="s0j-9D-f0j" id="ua5-rM-F4U"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="193" y="53"/>
         </scene>
@@ -54,7 +58,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="detailCell" textLabel="lKM-0K-IXr" detailTextLabel="Kxa-hl-SAg" style="IBUITableViewCellStyleSubtitle" id="EhG-3E-NXu">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EhG-3E-NXu" id="ZRc-vY-YMT">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -97,7 +101,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="czc-a1-tri" kind="relationship" relationship="rootViewController" id="yBR-Mh-6ZM"/>
+                        <segue destination="s0j-9D-f0j" kind="relationship" relationship="rootViewController" id="vRh-6m-hBv"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GB7-kX-v3u" userLabel="First Responder" sceneMemberID="firstResponder"/>

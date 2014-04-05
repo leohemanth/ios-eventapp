@@ -70,8 +70,10 @@
             // Update event properties.
             [event setValue:eventData[@"id"] forKey:@"googleid"];
             
+            NSLog(@"%@",eventData[@"id"]);
             [event setValue:eventData[@"title"] forKey:@"summary"];
             
+
             [event setValue:startDate forKey:@"date"];
         
             [event setValue:eventData[@"location"] forKey:@"location"];
@@ -79,7 +81,6 @@
             [event setValue:eventData[@"description"] forKey:@"desc"];
             
             [event setValue:endDate forKey:@"endDate"];
-            
             // Delete cancelled events.
             if ([eventData[@"status"] isEqualToString:@"cancelled"]) {
                 [context deleteObject:event];

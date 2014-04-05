@@ -1,8 +1,8 @@
 //
 //  Event.m
-//  GoogleCalendarDemo
+//  USCEvents
 //
-//  Created by Hemanth on 02/04/14.
+//  Created by Hemanth on 05/04/14.
 //  Copyright (c) 2014 Andrew Davis. All rights reserved.
 //
 
@@ -17,5 +17,6 @@
 @dynamic googleid;
 @dynamic location;
 @dynamic summary;
+@dynamic fblink;
 
 @end

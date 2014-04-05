@@ -15,6 +15,7 @@
 @interface ADCalendarViewController ()
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong,nonatomic) NSFetchedResultsController *filteredCandyArray;
 @end
 
 @implementation ADCalendarViewController
@@ -106,12 +107,24 @@
     }
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return YES if you want the specified item to be editable.
+    return YES;
+}
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSLog(@"swiped!! %@",[self.fetchedResultsController objectAtIndexPath:indexPath]);
+        [self.tableView reloadData];
+    }
+}
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
        Event *event = [self.fetchedResultsController objectAtIndexPath:self.tableView.indexPathForSelectedRow];
     if ([segue.identifier isEqualToString:@"eventDetail"]) {
         DetailViewTableViewController* detail= segue.destinationViewController;
         detail.event=event;
     }
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
 }
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     switch (type) {
