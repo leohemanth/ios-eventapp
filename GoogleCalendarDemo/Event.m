@@ -14,9 +14,10 @@
 @dynamic date;
 @dynamic desc;
 @dynamic endDate;
+@dynamic fblink;
+@dynamic fbid;
 @dynamic googleid;
 @dynamic location;
 @dynamic summary;
-@dynamic fblink;
-@dynamic fbid;
+
 @end

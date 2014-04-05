@@ -51,7 +51,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 6;
+    return 8;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -59,7 +59,10 @@
     NSDateComponents *components;
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MMM-dd"];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"detailCell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"detailCell"];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"detailCell"];
+    }
     switch (indexPath.row) {
         case 0:
             components = [[NSCalendar currentCalendar] components: NSDayCalendarUnit
@@ -88,6 +91,14 @@
         case 5:
             cell.textLabel.text=@"summary";
             cell.detailTextLabel.text=self.event.summary;
+            break;
+        case 6:
+            cell.textLabel.text=@"fbid";
+            cell.detailTextLabel.text=self.event.fbid;
+            break;
+        case 7:
+            cell.textLabel.text=@"fblink";
+            cell.detailTextLabel.text=self.event.fblink;
             break;
         default:
             break;

@@ -15,9 +15,10 @@
 @property (nonatomic, retain) NSDate * date;
 @property (nonatomic, retain) NSString * desc;
 @property (nonatomic, retain) NSDate * endDate;
+@property (nonatomic, retain) NSString * fblink;
+@property (nonatomic, retain) NSString * fbid;
 @property (nonatomic, retain) NSString * googleid;
 @property (nonatomic, retain) NSString * location;
 @property (nonatomic, retain) NSString * summary;
-@property (nonatomic, retain) NSString * fblink;
-@property (nonatomic,retain) NSString * fbid;
+
 @end

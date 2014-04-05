@@ -14,8 +14,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ADCalendarViewControllerCellIdentifier" id="a0c-M1-1ln" customClass="ADCalendarEventCell">
-                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ADCalendarViewControllerCellIdentifier" id="a0c-M1-1ln" customClass="ADCalendarViewControllerCellIdentifier">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="a0c-M1-1ln" id="7kF-eI-c85">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -58,7 +58,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="detailCell" textLabel="lKM-0K-IXr" detailTextLabel="Kxa-hl-SAg" style="IBUITableViewCellStyleSubtitle" id="EhG-3E-NXu">
-                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EhG-3E-NXu" id="ZRc-vY-YMT">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -101,7 +101,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="s0j-9D-f0j" kind="relationship" relationship="rootViewController" id="vRh-6m-hBv"/>
+                        <segue destination="czc-a1-tri" kind="relationship" relationship="rootViewController" id="GiT-oe-00L"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GB7-kX-v3u" userLabel="First Responder" sceneMemberID="firstResponder"/>

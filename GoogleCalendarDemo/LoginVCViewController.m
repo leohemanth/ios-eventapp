@@ -10,7 +10,7 @@
 #import "Event.h"
 # import <FacebookSDK/FacebookSDK.h>
 #import "ADManagedObjectContext.h"
-
+#import "ADCalendarViewController.h"
 @interface LoginVCViewController ()
 
 @end
@@ -47,13 +47,13 @@
 
 // Implement the loginViewShowingLoggedInUser: delegate method to modify your app's UI for a logged-in user experience
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
-   // self.statusLabel.text = @"You're logged in as";
+    // self.statusLabel.text = @"You're logged in as";
     
 }
 
 // Implement the loginViewShowingLoggedOutUser: delegate method to modify your app's UI for a logged-out user experience
 - (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView {
-   
+    
 }
 
 // You need to override loginView:handleError in order to handle possible errors that can occur during login
@@ -110,7 +110,6 @@
                           completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                               if (!error){
                                   NSDictionary *currentPermissions= [(NSArray *)[result data] objectAtIndex:0];
-                                  NSLog([NSString stringWithFormat:@"current permissions %@", currentPermissions]);
                                   NSMutableArray *requestPermissions = [[NSMutableArray alloc] initWithArray:@[]];
                                   
                                   // Check if all the permissions we need are present in the user's current permissions
@@ -128,25 +127,27 @@
                                                                        completionHandler:^(FBSession *session, NSError *error) {
                                                                            if (!error) {
                                                                                // Permission granted
-                                                                               NSLog([NSString stringWithFormat:@"new permissions %@", [FBSession.activeSession permissions]]);
+                                                                               //NSLog([NSString stringWithFormat:@"new permissions %@", [FBSession.activeSession permissions]]);
                                                                                // We can request the user information
-                                                                               [self fqlRequest];
+                                                                             //  [self fqlRequest];
+                                                                               [self.navigationController pushViewController:[[ADCalendarViewController alloc] init] animated:YES];
                                                                            } else {
                                                                                // An error occurred, we need to handle the error
                                                                                // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
-                                                                               NSLog([NSString stringWithFormat:@"error %@", error.description]);
+                                                                               //                                           NSLog([NSString stringWithFormat:@"error %@", error.description]);
                                                                            }
                                                                        }];
                                   } else {
                                       // Permissions are present
                                       // We can request the user information
-                                      [self fqlRequest];
+                                     // [self fqlRequest];
+                                      [self.navigationController pushViewController:[[ADCalendarViewController alloc] init] animated:NO];
                                   }
                                   
                               } else {
                                   // An error occurred, we need to handle the error
                                   // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
-                                  NSLog([NSString stringWithFormat:@"error %@", error.description]);
+                                  //NSLog([NSString stringWithFormat:@"error %@", error.description]);
                               }
                           }];
 }
@@ -157,81 +158,14 @@
                           completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                               if (!error) {
                                   // Success! Include your code to handle the results here
-                                  NSLog([NSString stringWithFormat:@"user events: %@", result]);
+                                  //  NSLog([NSString stringWithFormat:@"user events: %@", result]);
                               } else {
                                   // An error occurred, we need to handle the error
                                   // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
-                                  NSLog([NSString stringWithFormat:@"error %@", error.description]);
+                                  //   NSLog([NSString stringWithFormat:@"error %@", error.description]);
                               }
                           }];
 }
-
-
--(void) fqlRequest{
-    // Query to fetch the active user's friends, limit to 25.
-    
-    NSString *query =
-    @"SELECT name, venue, location, start_time, eid FROM event"
-    @" WHERE eid IN (SELECT eid FROM event_member WHERE uid IN ("
-    @" SELECT uid2 FROM friend WHERE uid1 = me() and uid2 in ("
-    @" SELECT uid FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) or uid=me()"
-    @" AND current_location.state = 'California')) or uid=me())";
-    
-    
- 
-    // Set up the query parameter
-    NSDictionary *queryParam = @{ @"q": query };
-    // Make the API request that uses FQL
-    [FBRequestConnection startWithGraphPath:@"/fql"
-                                 parameters:queryParam
-                                 HTTPMethod:@"GET"
-                          completionHandler:^(FBRequestConnection *connection,
-                                              id result,
-                                              NSError *error) {
-                              if (error) {
-                                  NSLog(@"Error: %@", [error localizedDescription]);
-                              } else {
-                                  NSLog(@"Result: %@", result);
-                                  [self parseResult:result];
-                              }
-                          }];
-}
-
--(void) parseResult:(id) result
-{
-    NSArray *resultArray = (NSArray *)[result valueForKey:@"data"];
-    NSMutableArray *eventArray = [[NSMutableArray alloc]init];
-    NSManagedObjectContext *context = [ADManagedObjectContext sharedContext];
-    
-    static NSDateFormatter *dayFormatter, *timeFormatter;
-    if (!dayFormatter || !timeFormatter) {
-        dayFormatter = [[NSDateFormatter alloc] init];
-        dayFormatter.dateFormat = @"yyyy-MM-dd";
-        timeFormatter = [[NSDateFormatter alloc] init];
-        timeFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
-    }
-
-    for(int i=0;i<resultArray.count;i++)
-    {
-        FBGraphObject *eventData = resultArray[i];
-        Event * fbEvent = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
-       
-        fbEvent.googleid=eventData[@"eid"];
-        fbEvent.location=eventData[@"location"];
-        fbEvent.summary=eventData[@"name"];
-        fbEvent.desc=eventData[@"name"];
-        fbEvent.fbid=eventData[@"eid"];
-
-        NSString * stDateString = eventData[@"start_time"];
-        NSString *stDatevalue = [stDateString substringWithRange:NSMakeRange(0,19)];
-        fbEvent.date = [timeFormatter dateFromString:stDatevalue];
-        
-        [eventArray addObject:fbEvent];
-
-    }
-    [context save:nil];
-    
-    }
 
 - (void)didReceiveMemoryWarning
 {
@@ -240,14 +174,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
