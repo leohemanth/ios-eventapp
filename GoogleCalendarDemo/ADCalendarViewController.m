@@ -44,7 +44,7 @@
     
     // Set up the refresh control and start a refresh action.
     self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(updateCalendar) forControlEvents:UIControlEventValueChanged];
+//    [self.refreshControl addTarget:self action:@selector(updateCalendar) forControlEvents:UIControlEventValueChanged];
     [self.tableView setContentOffset:CGPointMake(0, -self.refreshControl.frame.size.height) animated:NO];
     [self updateCalendar];
     [self fqlRequest];
@@ -52,7 +52,7 @@
 
 // Fetch calendar events. Show a pull-down spinner while updating.
 - (void)updateCalendar {
-    [self.refreshControl beginRefreshing];
+//    [self.refreshControl beginRefreshing];
     NSString * calendarUrl = @"https://script.google.com/macros/s/AKfycbzFeP6g6XKoyu9vRWWhKZQlSgNCGAtUA0sGNVBVq0BWPTAaMS8R/exec?id=0AraZ8rUzuRiRdGppRWZPNzBBZkR3THhmY0M4aVRpS1E&sheet=TMP";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -119,11 +119,15 @@
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+<<<<<<< HEAD
         
         NSLog(@"swiped!! %@",[self.fetchedResultsController objectAtIndexPath:indexPath]);
         
         
         //Get the context
+=======
+
+>>>>>>> f307e7a2f27ba55572c3edf7f537458836eefa86
         NSManagedObjectContext *context = [ADManagedObjectContext sharedContext];
         
         NSManagedObject *eventFilter = [NSEntityDescription insertNewObjectForEntityForName:@"EntityFilter" inManagedObjectContext:context];
@@ -173,6 +177,7 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     Event *event = [self.fetchedResultsController objectAtIndexPath:self.tableView.indexPathForSelectedRow];
+<<<<<<< HEAD
     DetailViewController *viewController = [[UIStoryboard storyboardWithName:@"Storyboard" bundle:nil] instantiateViewControllerWithIdentifier:@"detailView"];
     [self.navigationController pushViewController:viewController animated:YES];
     //    DetailViewTableViewController* detail= [[DetailViewTableViewController alloc ] init];
@@ -183,6 +188,17 @@
 //    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
  //   [self.navigationController pushViewController:detail animated:YES];
     
+=======
+    if (event.fblink)
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:event.fblink]];
+    else{
+        DetailViewTableViewController* detail= [[DetailViewTableViewController alloc ] init];
+        detail.event=event;
+        [self.navigationController pushViewController:detail animated:YES];
+        [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
+    }
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
+>>>>>>> f307e7a2f27ba55572c3edf7f537458836eefa86
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {

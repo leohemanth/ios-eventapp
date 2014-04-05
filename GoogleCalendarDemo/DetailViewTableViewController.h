@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Event.h"
-@interface DetailViewTableViewController : UITableViewController
+#import <EventKitUI/EventKitUI.h>
+@interface DetailViewTableViewController : UITableViewController <EKEventEditViewDelegate>
 @property (strong,nonatomic) Event *event;
 @end

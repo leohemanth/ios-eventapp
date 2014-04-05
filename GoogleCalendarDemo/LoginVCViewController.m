@@ -141,6 +141,7 @@
                                                                                // We can request the user information
                                                                              //  [self fqlRequest];
                                                                              //  [self.navigationController pushViewController:[[ADCalendarViewController alloc] init] animated:YES];
+                                                                        //       [self.navigationController pushViewController:[[ADCalendarViewController alloc] init] animated:YES];
                                                                            } else {
                                                                                // An error occurred, we need to handle the error
                                                                                // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
