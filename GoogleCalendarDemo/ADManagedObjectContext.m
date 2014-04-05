@@ -41,6 +41,7 @@
     }
     
     NSManagedObjectContext *context = [ADManagedObjectContext sharedContext];
+    
     [context performBlockAndWait:^{
         // Add all new events.
         for (NSDictionary *eventData in events) {
@@ -49,6 +50,7 @@
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Event"];
             fetchRequest.predicate = [NSPredicate predicateWithFormat:@"googleid == %@", eventData[@"id"]];
             NSArray *results = [context executeFetchRequest:fetchRequest error:nil];
+            
             event = (results.count > 0) ? results[0] : [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
             
             // Find the start date of the event.
