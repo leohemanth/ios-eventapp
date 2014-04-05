@@ -87,8 +87,7 @@
     
     
     //CGSize size = img.size;
-<<<<<<< HEAD
-    [self.bannerView setImage:img];
+    [self.bannerView setImage:image];
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStyleDone target:self action:@selector(addToCall)];
     
 	// Do any additional setup after loading the view.
@@ -107,8 +106,6 @@
     event.URL= [NSURL URLWithString:self.currentEvent.fblink];
     addController.event=event;
     [self presentViewController:addController animated:YES completion:nil];
-}
-    [self.bannerView setImage:image];
     // Do any additional setup after loading the view.
    }
 
