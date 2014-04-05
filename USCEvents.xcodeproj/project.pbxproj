@@ -46,6 +46,7 @@
 		49BBC27318908E6900D209DB /* ADCalendarEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BBC27218908E6900D209DB /* ADCalendarEventCell.m */; };
 		5359E4A518F062680098283B /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5359E4A418F062680098283B /* DetailViewController.m */; };
 		5359E4A718F065070098283B /* calIcon.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 5359E4A618F065070098283B /* calIcon.jpeg */; };
+		5359E4AB18F098950098283B /* usc.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 5359E4AA18F098950098283B /* usc.jpeg */; };
 		53AB465D18EFE10A0087D51A /* FbEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AB465C18EFE10A0087D51A /* FbEvents.m */; };
 		AA69CA33C1F447D1890FBA1A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B55AC4177C114FCEA0FE6666 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -114,6 +115,7 @@
 		5359E4A318F062680098283B /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		5359E4A418F062680098283B /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		5359E4A618F065070098283B /* calIcon.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = calIcon.jpeg; sourceTree = "<group>"; };
+		5359E4AA18F098950098283B /* usc.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = usc.jpeg; sourceTree = SOURCE_ROOT; };
 		53AB465B18EFE10A0087D51A /* FbEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FbEvents.h; sourceTree = "<group>"; };
 		53AB465C18EFE10A0087D51A /* FbEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FbEvents.m; sourceTree = "<group>"; };
 		B55AC4177C114FCEA0FE6666 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -211,6 +213,7 @@
 		4950F71318839B610030AD3E /* USC Events */ = {
 			isa = PBXGroup;
 			children = (
+				5359E4AA18F098950098283B /* usc.jpeg */,
 				4950F71C18839B610030AD3E /* ADAppDelegate.h */,
 				4950F71D18839B610030AD3E /* ADAppDelegate.m */,
 				4906A8761884AC7E000FFEE8 /* ADCalendarViewController.h */,
@@ -351,6 +354,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5359E4AB18F098950098283B /* usc.jpeg in Resources */,
 				4950F71818839B610030AD3E /* InfoPlist.strings in Resources */,
 				5359E4A718F065070098283B /* calIcon.jpeg in Resources */,
 				4950F72018839B610030AD3E /* Images.xcassets in Resources */,
