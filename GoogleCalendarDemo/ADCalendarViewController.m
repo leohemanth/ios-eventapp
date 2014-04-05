@@ -45,11 +45,13 @@
 // Fetch calendar events. Show a pull-down spinner while updating.
 - (void)updateCalendar {
     [self.refreshControl beginRefreshing];
+    NSLog(@"sadsdf");
     NSString * calendarUrl = @"https://script.google.com/macros/s/AKfycbzFeP6g6XKoyu9vRWWhKZQlSgNCGAtUA0sGNVBVq0BWPTAaMS8R/exec?id=0AraZ8rUzuRiRdGppRWZPNzBBZkR3THhmY0M4aVRpS1E&sheet=TMP";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager GET:calendarUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@",responseObject);
         self.eventsArray = [ADManagedObjectContext updateEvents:responseObject[@"TMP"]];
         [self.refreshControl endRefreshing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
