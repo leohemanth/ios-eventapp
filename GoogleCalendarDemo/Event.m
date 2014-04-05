@@ -14,10 +14,11 @@
 @dynamic date;
 @dynamic desc;
 @dynamic endDate;
-@dynamic fblink;
 @dynamic fbid;
+@dynamic fblink;
 @dynamic googleid;
 @dynamic location;
 @dynamic summary;
+@dynamic calIdentifier;
 
 @end

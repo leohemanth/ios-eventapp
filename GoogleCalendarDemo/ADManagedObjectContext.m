@@ -43,7 +43,7 @@
     
     NSManagedObjectContext *context = [ADManagedObjectContext sharedContext];
     
-    [context performBlockAndWait:^{
+    [context performBlock:^{
         // Add all new events.
         for (NSDictionary *eventData in events) {
             // Find an event if it is already stored or create it otherwise.
@@ -103,9 +103,7 @@
                 NSRange range = NSMakeRange(0, string.length);
                 NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:&error];
                 NSArray *matches = [regex matchesInString:string options:NSMatchingReportProgress range:range];
-//                NSLog(@"match:%@",[matches[0] rangeAtIndex:1]);
                 event.fblink = [NSString stringWithFormat:@"https://www.facebook.com/events/%@",[eventData[@"id"] substringWithRange:[matches[0] rangeAtIndex:1]]];
-                NSLog(@"%@",event.fblink);
                 event.fbid =[eventData[@"id"] substringWithRange:[matches[0] rangeAtIndex:1]];
             }
             

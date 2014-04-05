@@ -7,9 +7,16 @@
 //
 
 #import "DetailViewTableViewController.h"
+#import <EventKit/EventKit.h>
+#import "ADManagedObjectContext.h"
+
+#define FONT_SIZE 14.0f
+#define CELL_CONTENT_WIDTH 320.0f
+#define CELL_CONTENT_MARGIN 30.0f
 
 @interface DetailViewTableViewController ()
-
+@property BOOL addedCalled;
+@property (nonatomic, strong) EKEventStore *eventStore;
 @end
 
 @implementation DetailViewTableViewController
@@ -26,7 +33,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.addedCalled=NO;
+    self.eventStore = [[EKEventStore alloc] init];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -51,8 +59,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 8;
+    return 9;
 }
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -65,16 +74,20 @@
     }
     switch (indexPath.row) {
         case 0:
-            components = [[NSCalendar currentCalendar] components: NSDayCalendarUnit
-                                                         fromDate:[NSDate date] toDate: self.event.date options: 0];
-            cell.textLabel.text = [formatter stringFromDate:self.event.date];
-            cell.detailTextLabel.text =[NSString stringWithFormat:@"%d days left",[components day]];
+            if (self.event.date) {
+                components = [[NSCalendar currentCalendar] components: NSDayCalendarUnit
+                                                             fromDate:[NSDate date] toDate: self.event.date options: 0];
+                cell.textLabel.text = [formatter stringFromDate:self.event.date];
+                cell.detailTextLabel.text =[NSString stringWithFormat:@"%d days left",[components day]];
+            }
             break;
         case 1:
-            components = [[NSCalendar currentCalendar] components: NSDayCalendarUnit
-                                                         fromDate: self.event.endDate toDate:self.event.date options: 0];
-            cell.textLabel.text = [formatter stringFromDate:self.event.endDate];
-            cell.detailTextLabel.text =[NSString stringWithFormat:@"%d days event",[components day]];
+            if (self.event.date && self.event.endDate) {
+                components = [[NSCalendar currentCalendar] components: NSDayCalendarUnit
+                                                             fromDate: self.event.endDate toDate:self.event.date options: 0];
+                cell.textLabel.text = [formatter stringFromDate:self.event.endDate];
+                cell.detailTextLabel.text =[NSString stringWithFormat:@"%d days event",[components day]];
+            }
             break;
         case 2:
             cell.textLabel.text=@"desc";
@@ -100,6 +113,12 @@
             cell.textLabel.text=@"fblink";
             cell.detailTextLabel.text=self.event.fblink;
             break;
+        case 8:
+            if(self.addedCalled || self.event.calIdentifier!=nil)
+                cell.textLabel.text=@"added to your calender";
+            else
+                cell.textLabel.text=@"add to calender";
+            
         default:
             break;
     }
@@ -109,6 +128,49 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row==8) {
+        EKEventEditViewController *addController = [[EKEventEditViewController alloc] init];
+        EKEvent *event;
+        addController.editViewDelegate = self;
+        addController.eventStore = self.eventStore;
+        if (self.event.calIdentifier) {
+//            NSLog(@"id:%@",self.event.calIdentifier);
+//            event=[self.eventStore eventWithIdentifier:self.event.calIdentifier];
+//            EKCalendarItem * cal =[self.eventStore calendarItemWithIdentifier:self.event.calIdentifier];
+//            NSLog(@"event:%@ %@",event,cal);
+//            addController.event = event;
+//            
+        }else{
+            [self.tableView reloadData];
+            event = [EKEvent eventWithEventStore:self.eventStore];
+            event.title = self.event.summary;
+            event.location = self.event.location;
+            event.startDate = self.event.date;
+            event.endDate =  self.event.endDate;
+            event.notes = self.event.desc;
+            event.URL= [NSURL URLWithString:self.event.fblink];
+            addController.event=event;
+        }
+        [self presentViewController:addController animated:YES completion:nil];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+}
+
+- (void)eventEditViewController:(EKEventEditViewController *)controller
+		  didCompleteWithAction:(EKEventEditViewAction)action
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    if (action==EKEventEditViewActionSaved) {
+        self.addedCalled=YES;
+        [self.eventStore commit:nil];
+        NSManagedObjectContext *context = [ADManagedObjectContext sharedContext];
+        self.event.calIdentifier=controller.event.calendarItemIdentifier;
+        NSLog(@"%@",self.event.calIdentifier);
+        [context save:nil];
+    }
+    [self.tableView reloadData];
+}
 
 /*
  // Override to support conditional editing of the table view.

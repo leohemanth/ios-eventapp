@@ -12,6 +12,8 @@
 	<dict>
 		<key>5C542EAF-6AE0-4668-BD3C-92A0CC1455AB</key>
 		<string>https://github.com/leohemanth/ios-eventapp.git</string>
+		<key>C2540071-D8AF-445B-9E1B-1568C275D541</key>
+		<string>https://github.com/wtmoose/TLIndexPathTools.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>USCEvents.xcworkspace</string>
@@ -19,6 +21,8 @@
 	<dict>
 		<key>5C542EAF-6AE0-4668-BD3C-92A0CC1455AB</key>
 		<string>..</string>
+		<key>C2540071-D8AF-445B-9E1B-1568C275D541</key>
+		<string>../../TLIndexPathTools</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/leohemanth/ios-eventapp.git</string>
@@ -28,6 +32,14 @@
 	<string>5C542EAF-6AE0-4668-BD3C-92A0CC1455AB</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C2540071-D8AF-445B-9E1B-1568C275D541</string>
+			<key>IDESourceControlWCCName</key>
+			<string>TLIndexPathTools</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

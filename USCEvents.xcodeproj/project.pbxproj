@@ -11,7 +11,9 @@
 		1814942818EFF15E00836073 /* EventFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1814942718EFF15E00836073 /* EventFilter.m */; };
 		183AF76618ECBF9800E62EE5 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 183AF76518ECBF9800E62EE5 /* Storyboard.storyboard */; };
 		183AF76918ECC38C00E62EE5 /* DetailViewTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183AF76818ECC38C00E62EE5 /* DetailViewTableViewController.m */; };
-		18EB953D18EFFC7E005F0649 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EB953C18EFFC7E005F0649 /* Event.m */; };
+		18EB95B618F0473F005F0649 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18EB95B418F0473F005F0649 /* EventKit.framework */; };
+		18EB95B718F0473F005F0649 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18EB95B518F0473F005F0649 /* EventKitUI.framework */; };
+		18EB95BD18F05F47005F0649 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EB95BC18F05F47005F0649 /* Event.m */; };
 		18EE471C18EF905D00C1CD70 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18EE471B18EF905D00C1CD70 /* Parse.framework */; };
 		18EE471E18EF909900C1CD70 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18EE471D18EF909900C1CD70 /* AudioToolbox.framework */; };
 		18EE472018EF90A300C1CD70 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18EE471F18EF90A300C1CD70 /* CFNetwork.framework */; };
@@ -64,8 +66,10 @@
 		183AF76518ECBF9800E62EE5 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		183AF76718ECC38C00E62EE5 /* DetailViewTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewTableViewController.h; sourceTree = "<group>"; };
 		183AF76818ECC38C00E62EE5 /* DetailViewTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewTableViewController.m; sourceTree = "<group>"; };
-		18EB953B18EFFC7E005F0649 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
-		18EB953C18EFFC7E005F0649 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
+		18EB95B418F0473F005F0649 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		18EB95B518F0473F005F0649 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
+		18EB95BB18F05F47005F0649 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		18EB95BC18F05F47005F0649 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		18EE471B18EF905D00C1CD70 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		18EE471D18EF909900C1CD70 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		18EE471F18EF90A300C1CD70 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -116,6 +120,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18EB95B618F0473F005F0649 /* EventKit.framework in Frameworks */,
+				18EB95B718F0473F005F0649 /* EventKitUI.framework in Frameworks */,
 				18EE472E18EF90F000C1CD70 /* SystemConfiguration.framework in Frameworks */,
 				18EE472C18EF90E900C1CD70 /* StoreKit.framework in Frameworks */,
 				18EE472A18EF90DF00C1CD70 /* Security.framework in Frameworks */,
@@ -173,6 +179,8 @@
 		4950F70C18839B610030AD3E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				18EB95B418F0473F005F0649 /* EventKit.framework */,
+				18EB95B518F0473F005F0649 /* EventKitUI.framework */,
 				18EE493018EFA98600C1CD70 /* FacebookSDK.framework */,
 				18EE472D18EF90F000C1CD70 /* SystemConfiguration.framework */,
 				18EE472B18EF90E900C1CD70 /* StoreKit.framework */,
@@ -212,8 +220,8 @@
 				49BBC27218908E6900D209DB /* ADCalendarEventCell.m */,
 				4945E5281886095C0004CF3C /* ADManagedObjectContext.h */,
 				4945E5291886095C0004CF3C /* ADManagedObjectContext.m */,
-				18EB953B18EFFC7E005F0649 /* Event.h */,
-				18EB953C18EFFC7E005F0649 /* Event.m */,
+				18EB95BB18F05F47005F0649 /* Event.h */,
+				18EB95BC18F05F47005F0649 /* Event.m */,
 				4945E5231886043E0004CF3C /* Model.xcdatamodeld */,
 				1814942318EFED8B00836073 /* EntityFilter.h */,
 				1814942418EFED8B00836073 /* EntityFilter.m */,
@@ -392,7 +400,7 @@
 				4945E52A1886095C0004CF3C /* ADManagedObjectContext.m in Sources */,
 				183AF76918ECC38C00E62EE5 /* DetailViewTableViewController.m in Sources */,
 				53AB465D18EFE10A0087D51A /* FbEvents.m in Sources */,
-				18EB953D18EFFC7E005F0649 /* Event.m in Sources */,
+				18EB95BD18F05F47005F0649 /* Event.m in Sources */,
 				4950F71A18839B610030AD3E /* main.m in Sources */,
 				4945E5251886043E0004CF3C /* Model.xcdatamodeld in Sources */,
 				4950F71E18839B610030AD3E /* ADAppDelegate.m in Sources */,

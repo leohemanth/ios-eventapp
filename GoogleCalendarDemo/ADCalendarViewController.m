@@ -42,7 +42,7 @@
     
     // Set up the refresh control and start a refresh action.
     self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(updateCalendar) forControlEvents:UIControlEventValueChanged];
+//    [self.refreshControl addTarget:self action:@selector(updateCalendar) forControlEvents:UIControlEventValueChanged];
     [self.tableView setContentOffset:CGPointMake(0, -self.refreshControl.frame.size.height) animated:NO];
     [self updateCalendar];
     [self fqlRequest];
@@ -50,7 +50,7 @@
 
 // Fetch calendar events. Show a pull-down spinner while updating.
 - (void)updateCalendar {
-    [self.refreshControl beginRefreshing];
+//    [self.refreshControl beginRefreshing];
     NSString * calendarUrl = @"https://script.google.com/macros/s/AKfycbzFeP6g6XKoyu9vRWWhKZQlSgNCGAtUA0sGNVBVq0BWPTAaMS8R/exec?id=0AraZ8rUzuRiRdGppRWZPNzBBZkR3THhmY0M4aVRpS1E&sheet=TMP";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -118,10 +118,6 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
 
-        NSLog(@"swiped!! %@",[self.fetchedResultsController objectAtIndexPath:indexPath]);
-       
-        
-        //Get the context
         NSManagedObjectContext *context = [ADManagedObjectContext sharedContext];
         
         NSManagedObject *eventFilter = [NSEntityDescription insertNewObjectForEntityForName:@"EntityFilter" inManagedObjectContext:context];
