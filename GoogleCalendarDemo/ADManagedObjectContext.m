@@ -9,6 +9,7 @@
 #import "ADManagedObjectContext.h"
 #import "ADCalendarViewController.h"
 #import "Event.h"
+#import "EntityFilter.h"
 @implementation ADManagedObjectContext
 
 // Get or create a managed object context.
@@ -131,6 +132,22 @@
         NSArray *oldEvents = [context executeFetchRequest:fetchRequest error:nil];
         for (NSManagedObject *oldEvent in oldEvents) {
             [context deleteObject:oldEvent];
+        }
+        
+        NSString *titleConstant = @"title";
+        // Get all the title filtered events.
+        NSFetchRequest *fetchFilterRequest = [[NSFetchRequest alloc] initWithEntityName:@"EntityFilter"];
+        fetchFilterRequest.predicate = [NSPredicate predicateWithFormat:@"field = %@",titleConstant];
+        NSArray *filterObjArray = [context executeFetchRequest:fetchFilterRequest error:nil];
+        
+        for(NSManagedObject * filter in filterObjArray)
+        {
+            NSFetchRequest *fetchDelRequest = [[NSFetchRequest alloc] initWithEntityName:@"Event"];
+            fetchRequest.predicate = [NSPredicate predicateWithFormat:@"summary = %@",((EntityFilter*)filter).summary];
+            NSArray *oldEvents = [context executeFetchRequest:fetchRequest error:nil];
+            for (NSManagedObject *oldEvent in oldEvents) {
+                [context deleteObject:oldEvent];
+            }
         }
         
         [context save:nil];
