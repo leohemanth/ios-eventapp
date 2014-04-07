@@ -73,21 +73,39 @@
     //make a file name to write the data to using the documents directory:
     NSString *path = [NSString stringWithFormat:@"%@/usc.png",
                       documentsDirectory];*/
-    NSData *data;
-    UIImage *image;
+    //NSData *data;
+    UIImage *image = [[UIImage alloc] init];
     if(url!=NULL)
     {
-         data= [NSData dataWithContentsOfURL:url];
-        image = [[UIImage alloc] initWithData:data];
+        NSURLRequest * imgRequest = [NSURLRequest requestWithURL:url];
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
+        NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:imgRequest completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+            if(!error)
+            {
+                if([imgRequest.URL isEqual:url])
+                {
+                  UIImage *imgDwnLoaded = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.bannerView setImage:imgDwnLoaded];
+
+                    });
+                }
+            }
+        }];
+        [task resume];
+        
+       
     }
     else
     {
          image=[UIImage imageNamed:@"usc.jpeg"];
+        [self.bannerView setImage:image];
+
     }
     
     
     //CGSize size = img.size;
-    [self.bannerView setImage:image];
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStyleDone target:self action:@selector(addToCall)];
     
 	// Do any additional setup after loading the view.
