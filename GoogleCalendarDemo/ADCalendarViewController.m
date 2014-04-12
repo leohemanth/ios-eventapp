@@ -44,7 +44,7 @@
     
     // Set up the refresh control and start a refresh action.
     self.refreshControl = [[UIRefreshControl alloc] init];
-//    [self.refreshControl addTarget:self action:@selector(updateCalendar) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(updateCalendar) forControlEvents:UIControlEventValueChanged];
     [self.tableView setContentOffset:CGPointMake(0, -self.refreshControl.frame.size.height) animated:NO];
     [self updateCalendar];
     [self fqlRequest];
@@ -52,7 +52,9 @@
 
 // Fetch calendar events. Show a pull-down spinner while updating.
 - (void)updateCalendar {
-//    [self.refreshControl beginRefreshing];
+    [self.refreshControl beginRefreshing];
+    [self fqlRequest];
+
     NSString * calendarUrl = @"https://script.google.com/macros/s/AKfycbzFeP6g6XKoyu9vRWWhKZQlSgNCGAtUA0sGNVBVq0BWPTAaMS8R/exec?id=0AraZ8rUzuRiRdGppRWZPNzBBZkR3THhmY0M4aVRpS1E&sheet=TMP";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -253,14 +255,30 @@
         fetchRequest.predicate = [NSPredicate predicateWithFormat:@"fbid == %@",NULL_TO_NIL(eventData[@"eid"])];
         NSArray *results = [context executeFetchRequest:fetchRequest error:nil];
         
-        Event * fbEvent = (results.count > 0) ? results[0] : [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
+        Event * fbEvent;
+        if(results.count > 0)
+        {
+            fbEvent = results[0];
+        }
+        else
+        {
+            
+            fbEvent =[NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
+        }
         
         fbEvent.googleid=NULL_TO_NIL(eventData[@"eid"]);
         fbEvent.location=NULL_TO_NIL(eventData[@"location"]);
         fbEvent.summary=NULL_TO_NIL(eventData[@"name"]);
         fbEvent.desc=NULL_TO_NIL(eventData[@"name"]);
         fbEvent.fbid=NULL_TO_NIL(eventData[@"eid"]);
-        fbEvent.pic=NULL_TO_NIL(eventData[@"pic_cover"][@"source"]);
+      
+        NSDictionary * dic = NULL_TO_NIL(eventData[@"pic_cover"]);
+        if(dic!=nil)
+        {
+            if([dic valueForKey:@"source"]!=nil)
+            fbEvent.pic=NULL_TO_NIL(eventData[@"pic_cover"][@"source"]);
+            
+        }
         
         fbEvent.fblink= [NSString stringWithFormat:@"https://www.facebook.com/events/%@",fbEvent.fbid ];
         NSString * stDateString = NULL_TO_NIL(eventData[@"start_time"]);
@@ -268,11 +286,12 @@
             fbEvent.date = [timeFormatter dateFromString:stDateString];
         else
             fbEvent.date = [dayFormatter dateFromString:stDateString];
-        [eventArray addObject:fbEvent];
+        //[eventArray addObject:fbEvent];
     }
     [context save:nil];
     NSError*error;
     [self.fetchedResultsController performFetch:&error];
+    
     [self.tableView reloadData];
     
 }
