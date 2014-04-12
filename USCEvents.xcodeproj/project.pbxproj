@@ -48,6 +48,9 @@
 		5359E4A718F065070098283B /* calIcon.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 5359E4A618F065070098283B /* calIcon.jpeg */; };
 		5359E4AB18F098950098283B /* usc.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 5359E4AA18F098950098283B /* usc.jpeg */; };
 		53AB465D18EFE10A0087D51A /* FbEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AB465C18EFE10A0087D51A /* FbEvents.m */; };
+		53BD5ABE18F8D3F5008D86F2 /* FriendListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BD5ABD18F8D3F5008D86F2 /* FriendListTableViewController.m */; };
+		53BD5AC218F8D484008D86F2 /* FriendsListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BD5AC118F8D484008D86F2 /* FriendsListCell.m */; };
+		53BD5AC518F8DA93008D86F2 /* FBUserDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BD5AC418F8DA93008D86F2 /* FBUserDetails.m */; };
 		AA69CA33C1F447D1890FBA1A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B55AC4177C114FCEA0FE6666 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -118,6 +121,12 @@
 		5359E4AA18F098950098283B /* usc.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = usc.jpeg; sourceTree = SOURCE_ROOT; };
 		53AB465B18EFE10A0087D51A /* FbEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FbEvents.h; sourceTree = "<group>"; };
 		53AB465C18EFE10A0087D51A /* FbEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FbEvents.m; sourceTree = "<group>"; };
+		53BD5ABC18F8D3F5008D86F2 /* FriendListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendListTableViewController.h; sourceTree = "<group>"; };
+		53BD5ABD18F8D3F5008D86F2 /* FriendListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendListTableViewController.m; sourceTree = "<group>"; };
+		53BD5AC018F8D484008D86F2 /* FriendsListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsListCell.h; sourceTree = "<group>"; };
+		53BD5AC118F8D484008D86F2 /* FriendsListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsListCell.m; sourceTree = "<group>"; };
+		53BD5AC318F8DA93008D86F2 /* FBUserDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBUserDetails.h; sourceTree = "<group>"; };
+		53BD5AC418F8DA93008D86F2 /* FBUserDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBUserDetails.m; sourceTree = "<group>"; };
 		B55AC4177C114FCEA0FE6666 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2DD7D3F12A7404899E6C768 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -238,6 +247,12 @@
 				53AB465C18EFE10A0087D51A /* FbEvents.m */,
 				5359E4A318F062680098283B /* DetailViewController.h */,
 				5359E4A418F062680098283B /* DetailViewController.m */,
+				53BD5ABC18F8D3F5008D86F2 /* FriendListTableViewController.h */,
+				53BD5ABD18F8D3F5008D86F2 /* FriendListTableViewController.m */,
+				53BD5AC018F8D484008D86F2 /* FriendsListCell.h */,
+				53BD5AC118F8D484008D86F2 /* FriendsListCell.m */,
+				53BD5AC318F8DA93008D86F2 /* FBUserDetails.h */,
+				53BD5AC418F8DA93008D86F2 /* FBUserDetails.m */,
 				4950F71F18839B610030AD3E /* Images.xcassets */,
 				4950F71418839B610030AD3E /* Supporting Files */,
 			);
@@ -412,6 +427,8 @@
 			files = (
 				4945E52A1886095C0004CF3C /* ADManagedObjectContext.m in Sources */,
 				183AF76918ECC38C00E62EE5 /* DetailViewTableViewController.m in Sources */,
+				53BD5ABE18F8D3F5008D86F2 /* FriendListTableViewController.m in Sources */,
+				53BD5AC218F8D484008D86F2 /* FriendsListCell.m in Sources */,
 				53AB465D18EFE10A0087D51A /* FbEvents.m in Sources */,
 				18EB95BD18F05F47005F0649 /* Event.m in Sources */,
 				4950F71A18839B610030AD3E /* main.m in Sources */,
@@ -421,6 +438,7 @@
 				1814942518EFED8B00836073 /* EntityFilter.m in Sources */,
 				1814942818EFF15E00836073 /* EventFilter.m in Sources */,
 				4906A8781884AC7E000FFEE8 /* ADCalendarViewController.m in Sources */,
+				53BD5AC518F8DA93008D86F2 /* FBUserDetails.m in Sources */,
 				49BBC27318908E6900D209DB /* ADCalendarEventCell.m in Sources */,
 				18EE492F18EF988D00C1CD70 /* LoginVCViewController.m in Sources */,
 				5359E4A518F062680098283B /* DetailViewController.m in Sources */,

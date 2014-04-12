@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *lblDesc;
 @property (weak, nonatomic) IBOutlet UIImageView *calImage;
 @property (weak,nonatomic) IBOutlet UIScrollView * scrollView;
+@property (weak,nonatomic) IBOutlet UIButton *buttonFriendList;
 @property (strong,nonatomic) Event * currentEvent;
 -(void)fillDetails : (Event *) eventObj;
 

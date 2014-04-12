@@ -8,9 +8,12 @@
 
 #import <FacebookSDK/FacebookSDK.h>
 #import "DetailViewController.h"
+#import "FBUserDetails.h"
+#import "FriendListTableViewController.h"
 
 @interface DetailViewController ()
 @property (nonatomic, strong) EKEventStore *eventStore;
+@property (nonatomic,strong) NSMutableArray *friendList;
 @end
 
 @implementation DetailViewController
@@ -19,6 +22,8 @@
 {
     [super viewDidLoad];
     self.eventStore = [[EKEventStore alloc] init];
+    self.friendList = [[NSMutableArray alloc]init];
+    
     NSLog(@"in view did load!!");
     NSLog(@"fillDetail: %@",self.currentEvent);
     NSDateFormatter *dayFormatter, *timeFormatter;
@@ -98,8 +103,14 @@
     }
     
     if(self.currentEvent.fbid)
-    [self attendingfriendsList:self.currentEvent.fbid];
-    
+    {
+        [self attendingfriendsList:self.currentEvent.fbid];
+        self.buttonFriendList.hidden = false;
+    }
+    else
+    {
+        self.buttonFriendList.hidden = true;
+    }
     //CGSize size = img.size;
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStyleDone target:self action:@selector(addToCall)];
     
@@ -155,7 +166,7 @@
 // This method lists all the friends who are going to the event
 -(void) attendingfriendsList:(NSString *) eventId
 {
-    NSString * query = @"select name from user"
+    NSString * query = @"select name,pic_small,uid from user"
                                 @" where uid IN"
                                     @" (select uid"
                                         @" from event_member"
@@ -179,11 +190,37 @@
                                   NSLog(@"Error: %@", [error localizedDescription]);
                               } else {
                                   NSLog(@"Result: %@", result);
-                                  
+                                  [self parseFriendListResult:result];
                               }
                           }];
 
     
+}
+
+-(void) parseFriendListResult:(id) result
+{
+   
+    NSArray * friendListData = [result objectForKey:@"data"];
+    
+    for(int count=0;count<[friendListData count];count++)
+    {
+        FBGraphObject *friendObject = friendListData[count];
+        
+        FBUserDetails *fbFriend = [[FBUserDetails alloc]init];
+        fbFriend.name = friendObject[@"name"];
+        fbFriend.picURL = friendObject[@"pic_small"];
+        fbFriend.userID = friendObject[@"uid"];
+        
+        [self.friendList addObject:fbFriend];
+    }
+}
+
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSLog(@"Inside prepare for segue friend click");
+    FriendListTableViewController *friendListController = segue.destinationViewController;
+    friendListController.friendArray = [[NSMutableArray alloc]init];
+    friendListController.friendArray = self.friendList;
 }
 
 @end
