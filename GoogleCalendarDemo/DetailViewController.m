@@ -117,20 +117,27 @@
 	// Do any additional setup after loading the view.
 }
 -(void)addToCall{
-    EKEventEditViewController *addController = [[EKEventEditViewController alloc] init];
-    EKEvent *event;
-    addController.editViewDelegate = self;
-    addController.eventStore = self.eventStore;
-    event = [EKEvent eventWithEventStore:self.eventStore];
-    event.title = self.currentEvent.summary;
-    event.location = self.currentEvent.location;
-    event.startDate = self.currentEvent.date;
-    event.endDate =  self.currentEvent.endDate;
-    event.notes = self.currentEvent.desc;
-    event.URL= [NSURL URLWithString:self.currentEvent.fblink];
-    addController.event=event;
-    [self presentViewController:addController animated:YES completion:nil];
-    // Do any additional setup after loading the view.
+    
+    [self.eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+        if(granted) {
+           
+            // create/edit your event here
+            
+            EKEventEditViewController *addController = [[EKEventEditViewController alloc] init];
+            EKEvent *event;
+            addController.editViewDelegate = self;
+            addController.eventStore = self.eventStore;
+            event = [EKEvent eventWithEventStore:self.eventStore];
+            event.title = self.currentEvent.summary;
+            event.location = self.currentEvent.location;
+            event.startDate = self.currentEvent.date;
+            event.endDate =  self.currentEvent.endDate;
+            event.notes = self.currentEvent.desc;
+            event.URL= [NSURL URLWithString:self.currentEvent.fblink];
+            addController.event=event;
+            [self presentViewController:addController animated:YES completion:nil];
+            // Do any additional setup after loading the view.
+        }}];
    }
 
 -(void)viewDidAppear:(BOOL)animated{
