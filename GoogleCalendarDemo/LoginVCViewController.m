@@ -44,7 +44,7 @@
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView
                             user:(id<FBGraphUser>)user {
     [self requestEvents];
-    [PFFacebookUtils logInWithPermissions:@[@"basic_info",@"email"] block:^(PFUser *user, NSError *error) {
+    /*[PFFacebookUtils logInWithPermissions:@[@"basic_info",@"email"] block:^(PFUser *user, NSError *error) {
         if (!user) {
             NSLog(@"Uh oh. The user cancelled the Facebook login.");
         } else if (user.isNew) {
@@ -52,7 +52,7 @@
         } else {
             NSLog(@"User logged in through Facebook!");
         }
-    }];
+    }];*/
 }
 
 // Implement the loginViewShowingLoggedInUser: delegate method to modify your app's UI for a logged-in user experience

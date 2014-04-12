@@ -66,14 +66,6 @@
     
     NSURL *url = [NSURL URLWithString:self.currentEvent.pic];
     
-    /*NSArray *paths = NSSearchPathForDirectoriesInDomains
-    (NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    
-    //make a file name to write the data to using the documents directory:
-    NSString *path = [NSString stringWithFormat:@"%@/usc.png",
-                      documentsDirectory];*/
-    //NSData *data;
     UIImage *image = [[UIImage alloc] init];
     if(url!=NULL)
     {
@@ -104,6 +96,8 @@
 
     }
     
+    if(self.currentEvent.fbid)
+    [self attendingfriendsList:self.currentEvent.fbid];
     
     //CGSize size = img.size;
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStyleDone target:self action:@selector(addToCall)];
@@ -154,6 +148,20 @@
 -(void)fillDetails : (Event *) eventObj
 {
     self.currentEvent=eventObj;
+    
+}
+
+-(void) attendingfriendsList:(NSString *) eventId
+{
+    NSString * query = @"select name from user"
+                                @" where uid IN"
+                                    @" (select uid"
+                                        @" from event_member"
+                                        @" where rsvp_status='attending' and uid IN"
+                                            @" (select uid2 from friend where uid1=me())"
+                                                @" and eid='";
+    NSString *queryString = [NSString stringWithFormat:@"%@%@')",query,eventId];
+    
     
 }
 
