@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Andrew Davis. All rights reserved.
 //
 
+#import <FacebookSDK/FacebookSDK.h>
 #import "DetailViewController.h"
 
 @interface DetailViewController ()
@@ -151,6 +152,7 @@
     
 }
 
+// This method lists all the friends who are going to the event
 -(void) attendingfriendsList:(NSString *) eventId
 {
     NSString * query = @"select name from user"
@@ -162,6 +164,25 @@
                                                 @" and eid='";
     NSString *queryString = [NSString stringWithFormat:@"%@%@')",query,eventId];
     
+    NSLog(@"FQL friend fetch query : %@",queryString);
+    
+    // Set up the query parameter
+    NSDictionary *queryParam = @{ @"q": queryString };
+    // Make the API request that uses FQL
+    [FBRequestConnection startWithGraphPath:@"/fql"
+                                 parameters:queryParam
+                                 HTTPMethod:@"GET"
+                          completionHandler:^(FBRequestConnection *connection,
+                                              id result,
+                                              NSError *error) {
+                              if (error) {
+                                  NSLog(@"Error: %@", [error localizedDescription]);
+                              } else {
+                                  NSLog(@"Result: %@", result);
+                                  
+                              }
+                          }];
+
     
 }
 
