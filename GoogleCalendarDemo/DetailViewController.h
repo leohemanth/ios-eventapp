@@ -25,6 +25,7 @@
 @property (weak,nonatomic) IBOutlet UIScrollView * scrollView;
 @property (weak,nonatomic) IBOutlet UIButton *buttonFriendList;
 @property (strong,nonatomic) Event * currentEvent;
+@property (strong, nonatomic) IBOutlet UIButton *fbbutton;
 -(void)fillDetails : (Event *) eventObj;
 
 @end

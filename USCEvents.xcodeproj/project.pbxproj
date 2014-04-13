@@ -51,6 +51,8 @@
 		53BD5ABE18F8D3F5008D86F2 /* FriendListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BD5ABD18F8D3F5008D86F2 /* FriendListTableViewController.m */; };
 		53BD5AC218F8D484008D86F2 /* FriendsListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BD5AC118F8D484008D86F2 /* FriendsListCell.m */; };
 		53BD5AC518F8DA93008D86F2 /* FBUserDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BD5AC418F8DA93008D86F2 /* FBUserDetails.m */; };
+		53BD5AC818F9E11D008D86F2 /* SearchTableControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BD5AC718F9E11D008D86F2 /* SearchTableControllerViewController.m */; };
+		53D7ABB118FA0C7000A6BADF /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 53D7ABB018FA0C7000A6BADF /* facebook.png */; };
 		AA69CA33C1F447D1890FBA1A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B55AC4177C114FCEA0FE6666 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -127,6 +129,9 @@
 		53BD5AC118F8D484008D86F2 /* FriendsListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsListCell.m; sourceTree = "<group>"; };
 		53BD5AC318F8DA93008D86F2 /* FBUserDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBUserDetails.h; sourceTree = "<group>"; };
 		53BD5AC418F8DA93008D86F2 /* FBUserDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBUserDetails.m; sourceTree = "<group>"; };
+		53BD5AC618F9E11D008D86F2 /* SearchTableControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTableControllerViewController.h; sourceTree = "<group>"; };
+		53BD5AC718F9E11D008D86F2 /* SearchTableControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTableControllerViewController.m; sourceTree = "<group>"; };
+		53D7ABB018FA0C7000A6BADF /* facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook.png; sourceTree = "<group>"; };
 		B55AC4177C114FCEA0FE6666 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2DD7D3F12A7404899E6C768 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -223,6 +228,7 @@
 			isa = PBXGroup;
 			children = (
 				5359E4AA18F098950098283B /* usc.jpeg */,
+				53D7ABB018FA0C7000A6BADF /* facebook.png */,
 				4950F71C18839B610030AD3E /* ADAppDelegate.h */,
 				4950F71D18839B610030AD3E /* ADAppDelegate.m */,
 				4906A8761884AC7E000FFEE8 /* ADCalendarViewController.h */,
@@ -240,6 +246,8 @@
 				4945E5291886095C0004CF3C /* ADManagedObjectContext.m */,
 				18EB95BB18F05F47005F0649 /* Event.h */,
 				18EB95BC18F05F47005F0649 /* Event.m */,
+				53BD5AC618F9E11D008D86F2 /* SearchTableControllerViewController.h */,
+				53BD5AC718F9E11D008D86F2 /* SearchTableControllerViewController.m */,
 				4945E5231886043E0004CF3C /* Model.xcdatamodeld */,
 				1814942318EFED8B00836073 /* EntityFilter.h */,
 				1814942418EFED8B00836073 /* EntityFilter.m */,
@@ -370,6 +378,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5359E4AB18F098950098283B /* usc.jpeg in Resources */,
+				53D7ABB118FA0C7000A6BADF /* facebook.png in Resources */,
 				4950F71818839B610030AD3E /* InfoPlist.strings in Resources */,
 				5359E4A718F065070098283B /* calIcon.jpeg in Resources */,
 				4950F72018839B610030AD3E /* Images.xcassets in Resources */,
@@ -434,6 +443,7 @@
 				4950F71A18839B610030AD3E /* main.m in Sources */,
 				4945E5251886043E0004CF3C /* Model.xcdatamodeld in Sources */,
 				4950F71E18839B610030AD3E /* ADAppDelegate.m in Sources */,
+				53BD5AC818F9E11D008D86F2 /* SearchTableControllerViewController.m in Sources */,
 				18EE493718EFE75200C1CD70 /* EventFilter+PrivateMethods.m in Sources */,
 				1814942518EFED8B00836073 /* EntityFilter.m in Sources */,
 				1814942818EFF15E00836073 /* EventFilter.m in Sources */,

@@ -9,6 +9,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "DetailViewController.h"
 #import "FBUserDetails.h"
+#import "ADManagedObjectContext.h"
 #import "FriendListTableViewController.h"
 
 @interface DetailViewController ()
@@ -40,6 +41,14 @@
     NSString * endDateTime = [timeFormatter stringFromDate:self.currentEvent.endDate];
     NSString *endDate=@"",*endTime=@"";
     
+    if(self.currentEvent.calIdentifier)
+    {
+        self.navigationItem.rightBarButtonItem=nil;
+    }
+    else
+    {
+         self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"Add to calendar" style:UIBarButtonItemStyleDone target:self action:@selector(addToCall)];
+    }
     
     if(startDateTime.length>9)
     {
@@ -112,9 +121,13 @@
         self.buttonFriendList.hidden = true;
     }
     //CGSize size = img.size;
-    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStyleDone target:self action:@selector(addToCall)];
+   if(!self.currentEvent.fblink)
+       self.fbbutton.hidden=YES;
     
-	// Do any additional setup after loading the view.
+  	// Do any additional setup after loading the view.
+}
+- (IBAction)fbbuttonClicked:(id)sender {
+     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.currentEvent.fblink]];
 }
 -(void)addToCall{
     
@@ -131,10 +144,15 @@
             event.title = self.currentEvent.summary;
             event.location = self.currentEvent.location;
             event.startDate = self.currentEvent.date;
+            if(self.currentEvent.endDate!=nil)
             event.endDate =  self.currentEvent.endDate;
+            else
+            event.endDate =  self.currentEvent.date;
+            
             event.notes = self.currentEvent.desc;
             event.URL= [NSURL URLWithString:self.currentEvent.fblink];
             addController.event=event;
+            [addController.eventStore saveEvent:event span:EKSpanThisEvent error:nil];
             [self presentViewController:addController animated:YES completion:nil];
             // Do any additional setup after loading the view.
         }}];
@@ -155,6 +173,24 @@
 - (void)eventEditViewController:(EKEventEditViewController *)controller
 		  didCompleteWithAction:(EKEventEditViewAction)action
 {
+    
+    //Save this calIdentifier into the managed store
+    
+    if(controller.event.eventIdentifier)
+    {
+        NSManagedObjectContext *context = [ADManagedObjectContext sharedContext];
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Event"];
+        fetchRequest.predicate = [NSPredicate predicateWithFormat:@"googleid == %@", self.currentEvent.googleid];
+        NSArray *results = [context executeFetchRequest:fetchRequest error:nil];
+
+        if(results.count > 0)
+        {
+            Event * event = results[0];
+            event.calIdentifier = [NSString stringWithFormat:@"%@", controller.event.eventIdentifier];
+        }
+        [context save:nil];
+        
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
