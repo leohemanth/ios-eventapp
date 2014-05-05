@@ -47,16 +47,16 @@
     }
     else
     {
-         self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"Add to calendar" style:UIBarButtonItemStyleDone target:self action:@selector(addToCall)];
+        self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"Add to calendar" style:UIBarButtonItemStyleDone target:self action:@selector(addToCall)];
     }
     
     if(startDateTime.length>9)
     {
         NSArray* foo = [startDateTime componentsSeparatedByString: @"T"];
         if(foo.count>0)
-        startDate = [foo objectAtIndex:0];
+            startDate = [foo objectAtIndex:0];
         if(foo.count>1)
-        startTime = [foo objectAtIndex:1];
+            startTime = [foo objectAtIndex:1];
     }
     
     if(endDateTime.length>9)
@@ -64,13 +64,13 @@
         
         NSArray* foo = [endDateTime componentsSeparatedByString: @"T"];
         if(foo.count>0)
-        endDate = [foo objectAtIndex:0];
+            endDate = [foo objectAtIndex:0];
         if(foo.count>1)
-        endTime = [foo objectAtIndex:1];
+            endTime = [foo objectAtIndex:1];
     }
     
     
- 
+    
     self.lblEndDate.text = [NSString stringWithFormat:@"%@  %@",startDate,startTime];
     self.lblStartDate.text = [NSString stringWithFormat:@"%@  %@",endDate,endTime];;
     
@@ -92,48 +92,145 @@
             {
                 if([imgRequest.URL isEqual:url])
                 {
-                  UIImage *imgDwnLoaded = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
+                    UIImage *imgDwnLoaded = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.bannerView setImage:imgDwnLoaded];
-
+                        
                     });
                 }
             }
         }];
         [task resume];
         
-       
+        
     }
     else
     {
-         image=[UIImage imageNamed:@"usc.jpeg"];
+        image=[UIImage imageNamed:@"usc.jpeg"];
         [self.bannerView setImage:image];
-
+        
     }
+    
+    self.buttonFriendList.hidden = true;
     
     if(self.currentEvent.fbid)
     {
         [self attendingfriendsList:self.currentEvent.fbid];
-        self.buttonFriendList.hidden = false;
     }
     else
     {
         self.buttonFriendList.hidden = true;
     }
-    //CGSize size = img.size;
-   if(!self.currentEvent.fblink)
-       self.fbbutton.hidden=YES;
     
+    //CGSize size = img.size;
+    if(!self.currentEvent.fblink)
+    {
+        self.fbbutton.hidden=YES;
+        self.lblStatus.hidden=YES;
+        self.statusSwitch.hidden=YES;
+        self.lblStatusValue.hidden=YES;
+        
+    }
+    else
+    {
+        self.fbbutton.hidden=NO;
+        self.lblStatus.hidden=NO;
+        self.statusSwitch.hidden=NO;
+        self.lblStatusValue.hidden=NO;
+        
+        if([self.currentEvent.rsvp  isEqual: @"attending"])
+        {
+            self.lblStatusValue.text = @"Attending";
+            self.statusSwitch.on=YES;
+        }
+        else if([self.currentEvent.rsvp  isEqual: @"not_replied"])
+        {
+            self.lblStatusValue.text = @"Not Replied";
+            self.statusSwitch.on=NO;
+        }
+        else if([self.currentEvent.rsvp  isEqual: @"unsure"])
+        {
+            self.lblStatusValue.text = @"Unsure";
+            self.statusSwitch.on=NO;
+        }else if([self.currentEvent.rsvp  isEqual: @"declined"])
+        {
+            self.lblStatusValue.text = @"Declined";
+            self.statusSwitch.on=NO;
+        }
+        else
+        {   self.lblStatusValue.text = @"Not Replied";
+            self.statusSwitch.on=NO;
+        }
+    }
   	// Do any additional setup after loading the view.
+    [self.statusSwitch addTarget:self action:@selector(setState:) forControlEvents:UIControlEventValueChanged];
 }
 - (IBAction)fbbuttonClicked:(id)sender {
-     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.currentEvent.fblink]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.currentEvent.fblink]];
 }
+
+- (void)setState:(id)sender
+{
+    BOOL state = [sender isOn];
+    NSString * status = @"";
+    if(state==YES)
+    {
+        self.lblStatusValue.text = @"Attending";
+        status=@"attending";
+        
+        NSString *queryString = [NSString stringWithFormat:@"/%@/attending",self.currentEvent.fbid];
+        [self updateRsvp:queryString];
+        
+    }
+    else
+    {
+        self.lblStatusValue.text = @"Declined";
+        status=@"declined";
+        NSString *queryString = [NSString stringWithFormat:@"/%@/declined",self.currentEvent.fbid];
+        [self updateRsvp:queryString];
+    }
+    
+    NSManagedObjectContext *context = [ADManagedObjectContext sharedContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Event"];
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"fbid == %@", self.currentEvent.fbid];
+    NSArray *results = [context executeFetchRequest:fetchRequest error:nil];
+    
+    if(results.count > 0)
+    {
+        Event * event = results[0];
+        self.currentEvent.rsvp = status;
+        event.rsvp = status;
+    }
+    [context save:nil];
+    
+}
+
+-(void) updateRsvp:(NSString *) queryString{
+    
+    NSArray *permissionsNeeded = @[@"rsvp_event",@"publish_actions",@"status_update"];
+    
+    [[FBSession activeSession] requestNewPublishPermissions:permissionsNeeded
+                                            defaultAudience:FBSessionDefaultAudienceFriends
+                                          completionHandler:nil];
+    
+    [FBRequestConnection startWithGraphPath:queryString parameters:nil
+                                 HTTPMethod:@"POST"
+                          completionHandler:^(FBRequestConnection *connection,id result,NSError *error) {
+                              if (error) {
+                                  NSLog(@"Error: %@", [error localizedDescription]);
+                              } else {
+                                  NSLog(@"Result: %@", result);
+                                  //[self parseFriendListResult:result];
+                              }
+                          }];
+    
+}
+
 -(void)addToCall{
     
     [self.eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
         if(granted) {
-           
+            
             // create/edit your event here
             
             EKEventEditViewController *addController = [[EKEventEditViewController alloc] init];
@@ -145,9 +242,9 @@
             event.location = self.currentEvent.location;
             event.startDate = self.currentEvent.date;
             if(self.currentEvent.endDate!=nil)
-            event.endDate =  self.currentEvent.endDate;
+                event.endDate =  self.currentEvent.endDate;
             else
-            event.endDate =  self.currentEvent.date;
+                event.endDate =  self.currentEvent.date;
             
             event.notes = self.currentEvent.desc;
             event.URL= [NSURL URLWithString:self.currentEvent.fblink];
@@ -156,16 +253,21 @@
             [self presentViewController:addController animated:YES completion:nil];
             // Do any additional setup after loading the view.
         }}];
-   }
+}
 
 -(void)viewDidAppear:(BOOL)animated{
     NSLog(@"b:%f",self.scrollView.contentSize.height);
     CGRect contentRect = CGRectZero;
+    
     for (UIView *view in self.scrollView.subviews) {
         contentRect = CGRectUnion(contentRect, view.frame);
     }
+    contentRect.size.height = contentRect.size.height + 50;
     self.scrollView.contentSize = contentRect.size;
+    //self.scrollView.contentSize =  contentRect.size;
+    
     NSLog(@"a:%f",self.scrollView.contentSize.height);
+    self.scrollView.contentSize = self.scrollView.frame.size;
     [super viewDidAppear:animated];
 }
 
@@ -182,7 +284,7 @@
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Event"];
         fetchRequest.predicate = [NSPredicate predicateWithFormat:@"googleid == %@", self.currentEvent.googleid];
         NSArray *results = [context executeFetchRequest:fetchRequest error:nil];
-
+        
         if(results.count > 0)
         {
             Event * event = results[0];
@@ -210,12 +312,12 @@
 -(void) attendingfriendsList:(NSString *) eventId
 {
     NSString * query = @"select name,pic_small,uid from user"
-                                @" where uid IN"
-                                    @" (select uid"
-                                        @" from event_member"
-                                        @" where rsvp_status='attending' and uid IN"
-                                            @" (select uid2 from friend where uid1=me())"
-                                                @" and eid='";
+    @" where uid IN"
+    @" (select uid"
+    @" from event_member"
+    @" where rsvp_status='attending' and uid IN"
+    @" (select uid2 from friend where uid1=me())"
+    @" and eid='";
     NSString *queryString = [NSString stringWithFormat:@"%@%@')",query,eventId];
     
     NSLog(@"FQL friend fetch query : %@",queryString);
@@ -236,13 +338,13 @@
                                   [self parseFriendListResult:result];
                               }
                           }];
-
     
+    //[FBRequest requestForPostWithGraphPath:@"<EVENT ID HERE>/attending" graphObject:nil];
 }
 
 -(void) parseFriendListResult:(id) result
 {
-   
+    
     NSArray * friendListData = [result objectForKey:@"data"];
     
     for(int count=0;count<[friendListData count];count++)
@@ -256,14 +358,29 @@
         
         [self.friendList addObject:fbFriend];
     }
+    
+    if([self friendList].count>0)
+    {
+        self.buttonFriendList.hidden = false;
+    }
+    else
+    {
+        self.buttonFriendList.hidden = true;
+    }
+    
 }
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSLog(@"Inside prepare for segue friend click");
-    FriendListTableViewController *friendListController = segue.destinationViewController;
-    friendListController.friendArray = [[NSMutableArray alloc]init];
-    friendListController.friendArray = self.friendList;
+    if(self.friendList.count > 0)
+    {
+        FriendListTableViewController *friendListController = segue.destinationViewController;
+        friendListController.friendArray = [[NSMutableArray alloc]init];
+        friendListController.friendArray = self.friendList;
+    }
 }
+
+
 
 @end

@@ -21,5 +21,5 @@
 @dynamic summary;
 @dynamic calIdentifier;
 @dynamic pic;
-
+@dynamic rsvp;
 @end

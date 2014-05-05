@@ -17,6 +17,7 @@
         <attribute name="googleid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rsvp" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="summary" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>

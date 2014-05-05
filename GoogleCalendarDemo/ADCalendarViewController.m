@@ -286,17 +286,133 @@
             fbEvent.date = [timeFormatter dateFromString:stDateString];
         else
             fbEvent.date = [dayFormatter dateFromString:stDateString];
-        //[eventArray addObject:fbEvent];
+        
+                //[eventArray addObject:fbEvent];
+        
+        [self statusRequest:fbEvent.fbid];
+
     }
     [context save:nil];
     NSError*error;
     [self.fetchedResultsController performFetch:&error];
     
     [self.tableView reloadData];
-    
+    //[self statusRequest:resultArray];
+   
 }
 
+-(void) getEvent:(id)result Status:(NSString *)fbid
+{
+    
+    NSArray *resultArray = (NSArray *)[result valueForKey:@"data"];
+    NSManagedObjectContext *context = [ADManagedObjectContext sharedContext];
+    
+    for(int i=0;i<resultArray.count;i++)
+    {
+        FBGraphObject *eventData = resultArray[i];
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Event"];
+        fetchRequest.predicate = [NSPredicate predicateWithFormat:@"fbid == %@",NULL_TO_NIL(eventData[@"eid"])];
+        NSArray *results = [context executeFetchRequest:fetchRequest error:nil];
+        
+        Event * fbEvent;
+        if(results.count > 0)
+        {
+            fbEvent = results[0];
+        }
+        else
+        {
+            
+            fbEvent =[NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
+        }
+        
+     
+        fbEvent.rsvp = NULL_TO_NIL(eventData[@"rsvp_status"]);
+        
+    }
+  [context save:nil];
+    NSError*error;
+    [self.fetchedResultsController performFetch:&error];
+    
+    //[self.tableView reloadData];
+}
+/*
+-(void) statusRequest: (NSArray *) resultArray{
+    // Query to fetch the active user's friends, limit to 25.
+    
+   
+    NSManagedObjectContext *context = [ADManagedObjectContext sharedContext];
+    
+    for(int i=0;i<resultArray.count;i++)
+    {
+        FBGraphObject *eventData = resultArray[i];
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Event"];
+        fetchRequest.predicate = [NSPredicate predicateWithFormat:@"fbid == %@",NULL_TO_NIL(eventData[@"eid"])];
+        NSArray *results = [context executeFetchRequest:fetchRequest error:nil];
+        
+        Event * fbEvent;
+        if(results.count > 0)
+        {
+            fbEvent = results[0];
+        }
+        else
+        {
+            
+            fbEvent =[NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
+        }
+        
+        NSString *query =
+        @"SELECT eid,rsvp_status FROM event_member"
+        @" WHERE uid=me() and eid = '";
+        
+        NSString *queryString = [NSString stringWithFormat:@"%@%@'",query,fbEvent.fbid];
+        
+        NSLog(@"FQL:%@",queryString);
+        // Set up the query parameter
+        NSDictionary *queryParam = @{ @"q": queryString };
+        // Make the API request that uses FQL
+        [FBRequestConnection startWithGraphPath:@"/fql"
+                                     parameters:queryParam
+                                     HTTPMethod:@"GET"
+                              completionHandler:^(FBRequestConnection *connection,
+                                                  id result,
+                                                  NSError *error) {
+                                  if (error) {
+                                      NSLog(@"Error: %@", [error localizedDescription]);
+                                  } else {
+                                      NSLog(@"Result: %@", result);
+                                      [self getEventStatus:result];
+                                  }
+                              }];
 
+    }
+   }
+*/
 
-
+-(void) statusRequest: (NSString *) fbid{
+            NSString *query =
+        @"SELECT eid,rsvp_status FROM event_member"
+        @" WHERE uid=me() and eid = '";
+        
+        NSString *queryString = [NSString stringWithFormat:@"%@%@'",query,fbid];
+        
+        NSLog(@"FQL:%@",queryString);
+        // Set up the query parameter
+        NSDictionary *queryParam = @{ @"q": queryString };
+        // Make the API request that uses FQL
+        [FBRequestConnection startWithGraphPath:@"/fql"
+                                     parameters:queryParam
+                                     HTTPMethod:@"GET"
+                              completionHandler:^(FBRequestConnection *connection,
+                                                  id result,
+                                                  NSError *error) {
+                                  if (error) {
+                                      NSLog(@"Error: %@", [error localizedDescription]);
+                                  } else {
+                                      NSLog(@"Result: %@", result);
+                                      [self getEvent:result Status:fbid];
+                                  }
+                              }];
+        
+    
+}
 @end

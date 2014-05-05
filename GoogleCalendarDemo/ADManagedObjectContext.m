@@ -116,6 +116,8 @@
             [event setValue:eventData[@"description"] forKey:@"desc"];
             
             [event setValue:endDate forKey:@"endDate"];
+            
+            event.rsvp=@"";
             // Delete cancelled events.
             if ([eventData[@"status"] isEqualToString:@"cancelled"]) {
                 [context deleteObject:event];

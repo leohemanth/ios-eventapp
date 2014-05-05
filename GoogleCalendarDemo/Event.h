@@ -22,5 +22,6 @@
 @property (nonatomic, retain) NSString * summary;
 @property (nonatomic, retain) NSString * calIdentifier;
 @property (nonatomic, retain) NSString * pic;
+@property (nonatomic, retain) NSString * rsvp;
 
 @end
